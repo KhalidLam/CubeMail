@@ -1,0 +1,14 @@
+// Setup 
+
+# node -v 
+# npm -v
+# cd project-dir 
+# npm init 
+# npm install react  --save
+# npm install react-dom  --save
+# npm install react-scripts  --save
+
+// add scripts 
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts start"
