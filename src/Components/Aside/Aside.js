@@ -1,5 +1,5 @@
 import React from "react";
-import SendModel from "./SendModel";
+import SendModel from "../Message/SendModel";
 // Icons
 import { MdArchive } from "react-icons/md";
 import { FiSend, FiFile } from "react-icons/fi";

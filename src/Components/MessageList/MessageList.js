@@ -1,5 +1,5 @@
 import React from "react";
-import { getHeader, isEmpty, decodeHtml, removeQuote } from "./Helper";
+import { getHeader, isEmpty, decodeHtml, removeQuote } from "../Helper";
 import {
   Flex,
   Box,

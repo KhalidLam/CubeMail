@@ -1,7 +1,7 @@
 import React from "react";
 import ReplyModel from "./ReplyModel";
 import ForwardModel from "./ForwardModel";
-import { getHeader, isEmpty, removeQuote } from "./Helper";
+import { getHeader, isEmpty, removeQuote } from "../Helper";
 import { Base64 } from "js-base64";
 
 import {

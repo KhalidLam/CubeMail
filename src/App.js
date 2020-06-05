@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Aside from "./Components/Aside";
-import MessageList from "./Components/MessageList";
-import Message from "./Components/Message";
+import Aside from "./Components/Aside/Aside";
+import MessageList from "./Components/MessageList/MessageList";
+import Message from "./Components/Message/Message";
 import { Api } from "./Components/Api";
 import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 
