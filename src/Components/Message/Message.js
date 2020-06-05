@@ -2,8 +2,8 @@ import React from "react";
 import ReplyModel from "./ReplyModel";
 import ForwardModel from "./ForwardModel";
 import { getHeader, isEmpty, removeQuote } from "../Helper";
+import { MdArchive } from "react-icons/md";
 import { Base64 } from "js-base64";
-
 import {
   Flex,
   Box,
@@ -13,8 +13,6 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/core";
-
-import { MdArchive, MdArrowForward } from "react-icons/md";
 
 const Message = ({ message }) => {
   console.log("Message Component", message);

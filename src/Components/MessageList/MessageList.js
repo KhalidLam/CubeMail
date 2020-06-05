@@ -10,11 +10,33 @@ import {
   Avatar,
   Text,
   Spinner,
+  Skeleton,
 } from "@chakra-ui/core";
 
 const Messages = ({ handleMessageClick, messagesRow }) => {
   console.log("Messages List Component");
   console.log(messagesRow);
+
+  let displaySkeleton = () => {
+    return [1, 2, 3, 4, 5].map((i) => (
+      <Flex
+        justify='space-around'
+        py={2}
+        borderTop='1px'
+        borderBottom='1px'
+        borderColor='gray.200'
+      >
+        <Box>
+          <Skeleton width='48px' height='48px' borderRadius='50%' />
+        </Box>
+        <Box w='70%'>
+          <Skeleton height='20px' mb='10px' />
+          <Skeleton height='20px' mb='10px' />
+          <Skeleton height='30px' mb='10px' />
+        </Box>
+      </Flex>
+    ));
+  };
 
   if (!isEmpty(messagesRow)) {
     return (
@@ -51,6 +73,9 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
               );
               const subject = getHeader(message.payload.headers, "Subject");
               const msg = message.snippet.substr(0, 75);
+              const background =
+                message.labelIds.indexOf("UNREAD") > -1 ? "#fff" : "#E2E8F0";
+
               return (
                 <Flex
                   key={message.id}
@@ -59,9 +84,10 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
                   wrap='no-wrap'
                   justify='space-around'
                   py={2}
+                  bg={background}
                   borderTop='1px'
                   borderBottom='1px'
-                  borderColor='gray.200'
+                  borderColor='gray.300'
                   cursor='pointer'
                 >
                   <Avatar name={name} src='https://bit.ly/tioluwani-kolawole' />
@@ -117,7 +143,12 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
           </Box>
 
           {/* Message List */}
-          <Box mt={6} display='flex' align='center' justifyContent='center'>
+
+          {/* Display Skeleton */}
+          {displaySkeleton()}
+
+          {/* Display Spinner */}
+          {/* <Box mt={6} display='flex' align='center' justifyContent='center'>
             <Spinner
               thickness='4px'
               speed='0.65s'
@@ -125,7 +156,7 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
               color='blue.500'
               size='xl'
             />
-          </Box>
+          </Box> */}
         </Flex>
       </React.Fragment>
     );

@@ -1,8 +1,8 @@
 // Api For myMail app
 export const Api = {
   clientId:
-    "xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
-  apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "151874614484-4l3jt39oita663cgip5ts1s7d7npaop6.apps.googleusercontent.com",
+  apiKey: "AIzaSyAzQf9oXQG7FR2FixHcVp9ksFK9NQpqKZs",
   scopes: "https://mail.google.com/",
 };
 
