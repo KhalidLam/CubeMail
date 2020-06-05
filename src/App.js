@@ -153,7 +153,7 @@ export class App extends Component {
 
   getOneMessage = () => {
     console.log("getOneMessage...");
-    const messageId = this.state.messages[7].id;
+    const messageId = this.state.messages[2].id;
     console.log("Message ID : ", messageId);
 
     return window.gapi.client.gmail.users.messages
@@ -183,7 +183,6 @@ export class App extends Component {
       <React.Fragment>
         <ThemeProvider>
           <CSSReset />
-
           <Button
             id='authBtn'
             display='none'
@@ -199,7 +198,7 @@ export class App extends Component {
             minH='600px'
             justify='space-arround'
             wrap='no-wrap'
-            p='2em 1em'
+            p='1em'
             bg='#e5f4f1'
             color='white'
           >

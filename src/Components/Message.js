@@ -1,6 +1,7 @@
 import React from "react";
 import ReplyModel from "./ReplyModel";
-import { getHeader, isEmpty } from "./Helper";
+import ForwardModel from "./ForwardModel";
+import { getHeader, isEmpty, removeQuote } from "./Helper";
 import { Base64 } from "js-base64";
 
 import {
@@ -11,6 +12,7 @@ import {
   Avatar,
   Text,
   useToast,
+  Spinner,
 } from "@chakra-ui/core";
 
 import { MdArchive, MdArrowForward } from "react-icons/md";
@@ -131,6 +133,31 @@ const Message = ({ message }) => {
     return "";
   };
 
+  // let handleForwardMsg = (userId, headers, body) => {
+  //   var msg = "";
+  //   msg += "From: " + getHeader(headers, "From") + "\r\n";
+  //   msg += "Date: " + getHeader(headers, "Date") + "\r\n";
+  //   msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
+  //   msg += "To: " + getHeader(headers, "To") + "\r\n";
+  //   msg += "Content-Type: " + getHeader(headers, "Content-Type") + "\r\n";
+  //   msg += "\r\n" + body;
+
+  //   sendMessage(userId, msg, (res) => {
+  //     console.log("Sending..", res);
+  //   });
+  // };
+
+  // let sendMessage = (userId, email, callback) => {
+  //   var base64EncodedEmail = Base64.encodeURI(email);
+  //   var request = window.gapi.client.gmail.users.messages.send({
+  //     userId: userId,
+  //     resource: {
+  //       raw: base64EncodedEmail,
+  //     },
+  //   });
+  //   request.execute(callback);
+  // };
+
   if (!isEmpty(message)) {
     return (
       <Flex
@@ -147,13 +174,22 @@ const Message = ({ message }) => {
         {/* Header Buttons */}
         <Flex justify='space-around' wrap='no-wrap' mb={2}>
           <ReplyModel replayData={formatReplayData(message.payload.headers)} />
-          <Button
+          <ForwardModel forwardData={message} getMessageBody={getMessageBody} />
+          {/* <Button
             rightIcon={MdArrowForward}
             variantColor='teal'
             variant='outline'
+            onClick={() =>
+              handleForwardMsg(
+                "eclipsegk10@gmail.com",
+                message.payload.headers,
+                getMessageBody(message.payload)
+              )
+            }
           >
             Forward
-          </Button>
+          </Button> */}
+
           <Button
             rightIcon={MdArchive}
             variantColor='teal'
@@ -186,7 +222,7 @@ const Message = ({ message }) => {
             </Text>
             <Flex wrap='no-wrap' justify='flex-start'>
               <Avatar
-                name={getHeader(headers, "From")}
+                name={removeQuote(getHeader(headers, "From").split("<")[0])}
                 src='https://bit.ly/tioluwani-kolawole'
                 mr={4}
               />
@@ -250,7 +286,22 @@ const Message = ({ message }) => {
             Delete
           </Button>
         </Flex>
-        <Box className='mailContainer' p={2} overflow='auto'></Box>
+        <Box
+          className='mailContainer'
+          mt={6}
+          p={2}
+          display='flex'
+          align='center'
+          justifyContent='center'
+        >
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          />
+        </Box>
       </Flex>
     );
   }

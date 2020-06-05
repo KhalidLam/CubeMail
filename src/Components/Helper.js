@@ -1,10 +1,6 @@
 export const getHeader = (headers, name) => {
-  const res = headers.find((header) => header.name === name);
-  return res !== undefined ? res.value : res;
-};
-
-export const plus = (num1, num2) => {
-  return num1 + num2;
+  const header = headers.find((header) => header.name === name);
+  return header !== undefined ? header.value : undefined;
 };
 
 export const isEmpty = (obj) => {
@@ -18,4 +14,8 @@ export const decodeHtml = (html) => {
   var txt = document.createElement("textarea");
   txt.innerHTML = html;
   return txt.value;
-}
+};
+
+export const removeQuote = (str) => {
+  return str.replace(/['"]+/g, "");
+};

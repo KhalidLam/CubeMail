@@ -1,5 +1,5 @@
 import React from "react";
-import { getHeader, isEmpty, decodeHtml } from "./Helper";
+import { getHeader, isEmpty, decodeHtml, removeQuote } from "./Helper";
 import {
   Flex,
   Box,
@@ -9,10 +9,9 @@ import {
   Icon,
   Avatar,
   Text,
+  Spinner,
 } from "@chakra-ui/core";
 
-// /^<([A-Z])*\w+@([A-Z])*\w+.com>/g
-// var n = str.replace(/Microsoft/g, "W3Schools");
 const SingleMessage = ({ name, subject, msg }) => (
   <Flex
     wrap='no-wrap'
@@ -22,12 +21,11 @@ const SingleMessage = ({ name, subject, msg }) => (
     borderBottom='1px'
     borderColor='gray.200'
     cursor='pointer'
-    _hover={{ borderColor: "black" }}
   >
     <Avatar name={name} src='https://bit.ly/tioluwani-kolawole' />
     <Box w='80%'>
-      <Text fontSize='sm' color='gray.700'>
-        {name}
+      <Text fontSize='sm' color='gray.700' isTruncated>
+        {removeQuote(name)}
       </Text>
       <Text fontSize='md' fontWeight='bold' color='#3182ce' isTruncated>
         {subject}
@@ -46,7 +44,6 @@ const Messages = ({ messages, messagesRow }) => {
   if (!isEmpty(messagesRow)) {
     return (
       <React.Fragment>
-        {/* Container */}
         <Flex
           direction='column'
           wrap='no-wrap'
@@ -76,7 +73,9 @@ const Messages = ({ messages, messagesRow }) => {
             {messagesRow.map((message) => (
               <SingleMessage
                 key={message.id}
-                name={getHeader(message.payload.headers, "From").split("<")[0]}
+                name={removeQuote(
+                  getHeader(message.payload.headers, "From").split("<")[0]
+                )}
                 subject={getHeader(message.payload.headers, "Subject")}
                 msg={message.snippet.substr(0, 75)}
               />
@@ -114,46 +113,13 @@ const Messages = ({ messages, messagesRow }) => {
           </Box>
 
           {/* Message List */}
-          <Box overflowY='auto'>
-            <SingleMessage
-              name='khalid Lam'
-              subject='Welcome to the course + Your first JavaScript challenge'
-              msg=' Lorem ipsum is placeholder text commonly used in the graphic and
-        publishing.'
-            />
-            <SingleMessage
-              name='Ahmed sami'
-              subject='Welcome to the course + Your first JavaScript challenge'
-              msg=' Lorem ipsum is placeholder text commonly used in the graphic and
-        publishing.'
-            />
-            <SingleMessage
-              name='Ali Dari'
-              subject='Welcome to the course + Your first JavaScript challenge'
-              msg=' Lorem ipsum is placeholder text commonly used in the graphic and
-        publishing.'
-            />
-            <SingleMessage
-              name='Mohamed Amine'
-              subject='Welcome to the course + Your first JavaScript challenge'
-              msg=' Lorem ipsum is placeholder text commonly used in the graphic and
-        publishing.'
-            />
-            <SingleMessage
-              name='Youness Reda'
-              subject='Welcome to the course + Your first JavaScript challenge'
-              msg=' Lorem ipsum is placeholder text commonly used in the graphic and
-        publishing.'
-            />
-            <SingleMessage
-              name='Samir Lachkar'
-              subject='Welcome to the course + Your first JavaScript challenge'
-              msg=' Lorem ipsum is placeholder text commonly used in the graphic and
-        publishing.'
-            />
-            <SingleMessage
-              subject='Welcome to the course + Your first JavaScript challenge'
-              name='Omar Nasor'
+          <Box mt={6} display='flex' align='center' justifyContent='center'>
+            <Spinner
+              thickness='4px'
+              speed='0.65s'
+              emptyColor='gray.200'
+              color='blue.500'
+              size='xl'
             />
           </Box>
         </Flex>
