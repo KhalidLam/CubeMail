@@ -19,7 +19,8 @@ import {
 } from "@chakra-ui/core";
 
 const ForwardModel = ({ forwardData, getMessageBody }) => {
-  console.log("ForwardModel Component", forwardData);
+  console.log("forwardData => ", forwardData);
+  // console.log("getMessageBody => ", getMessageBody);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -36,24 +37,15 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
   };
 
   let handleForwardMsg = (forwardTo, headers, body) => {
-    // var msg = "";
-    // msg += "From: " + getHeader(headers, "From") + "\r\n";
-    // msg += "Date: " + getHeader(headers, "Date") + "\r\n";
-    // msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
-    // msg += "To: " + forwardTo + "\r\n";
-    // msg += "Content-Type: text/html; charset=UTF-8" + "\r\n";
-    // msg += "\r\n" + body;
+    var msg = "";
+    msg += "From: " + getHeader(headers, "From") + "\r\n";
+    msg += "Date: " + getHeader(headers, "Date") + "\r\n";
+    msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
+    msg += "To: " + forwardTo + "\r\n";
+    msg += "Content-Type: text/html; charset=UTF-8" + "\r\n";
+    msg += "\r\n" + body;
 
-    const msgBody = `From: ${getHeader(headers, "From")}
-      Date: ${getHeader(headers, "Date")}
-      Subject: ${getHeader(headers, "Subject")}
-      To: ${forwardTo}
-      Content-Type: text/html; charset=UTF-8
-
-      ${body}
-      `;
-
-    sendMessage("me", msgBody, handleForwardResponse);
+    sendMessage("me", msg, handleForwardResponse);
   };
 
   let sendMessage = (userId, email, callback) => {
