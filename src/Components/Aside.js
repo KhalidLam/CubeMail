@@ -2,10 +2,9 @@ import React from "react";
 import SendModel from "./SendModel";
 // Icons
 import { MdArchive } from "react-icons/md";
-import { BsPlusCircle } from "react-icons/bs";
 import { FiSend, FiFile } from "react-icons/fi";
 // Chakra Component
-import { Button, Box, List, ListItem, useDisclosure } from "@chakra-ui/core";
+import { Button, Box, List, ListItem } from "@chakra-ui/core";
 
 const Aside = (props) => {
   console.log("Aside Component");

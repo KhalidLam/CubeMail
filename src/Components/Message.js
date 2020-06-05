@@ -13,21 +13,20 @@ import {
   useToast,
 } from "@chakra-ui/core";
 
-import {
-  MdArchive,
-  MdMoreHoriz,
-  MdArrowForward,
-  MdReplay,
-} from "react-icons/md";
+import { MdArchive, MdArrowForward } from "react-icons/md";
 
 const Message = ({ message }) => {
   console.log("Message Component", message);
   const headers = isEmpty(message) ? [] : message.payload.headers;
   const toast = useToast();
 
-  let formatReplayData = (headers) => {
-    console.log("formatReplayData...", headers);
+  React.useEffect(() => {
+    if (!isEmpty(message)) {
+      addToFrame(message);
+    }
+  }, [message]);
 
+  let formatReplayData = (headers) => {
     const replayTo =
       getHeader(headers, "Reply-to") !== undefined
         ? getHeader(headers, "Reply-to")
@@ -43,14 +42,12 @@ const Message = ({ message }) => {
   };
 
   let handleTrashBtn = (userId, messageId) => {
-    console.log("Trash Message...");
     return window.gapi.client.gmail.users.messages
       .trash({
         userId: userId,
         id: messageId,
       })
       .then((resp) => {
-        console.log("resp: ", resp);
         if (resp.status === 200) {
           toast({
             title: "Message Deleted",
@@ -74,7 +71,6 @@ const Message = ({ message }) => {
   };
 
   let handleArchiveBtn = (ids, labelIds) => {
-    console.log("Archive Message...");
     return window.gapi.client.gmail.users.messages
       .batchModify({
         userId: "me",
@@ -84,7 +80,6 @@ const Message = ({ message }) => {
         },
       })
       .then((resp) => {
-        console.log("resp: ", resp);
         if (resp.status === 204) {
           toast({
             title: "Message Archived",
@@ -108,7 +103,6 @@ const Message = ({ message }) => {
   };
 
   let addToFrame = (message) => {
-    console.log("add To Iframe...");
     var ifrm = document.getElementById("iframe").contentWindow.document;
     ifrm.body.innerHTML = getMessageBody(message.payload);
   };
@@ -157,7 +151,6 @@ const Message = ({ message }) => {
             rightIcon={MdArrowForward}
             variantColor='teal'
             variant='outline'
-            onClick={() => addToFrame(message)}
           >
             Forward
           </Button>
