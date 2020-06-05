@@ -18,9 +18,6 @@ The account sign-in and authentication process is **totally managed by Gmail's s
 
 
 Features:
-
-- Responsive Viewport (with Bootstrap and CSS3 flexbox styling)
-
-- Read, Send, Reply, Move to Trash.
+- Read, Send, Reply, Forward, Archive, Move to Trash.
 
 LICENSE: [MIT License](https://opensource.org/licenses/MIT)
