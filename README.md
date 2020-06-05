@@ -1,3 +1,5 @@
+# Working with the Gmail JavaScript API
+
 A simple Gmail client made with [Create-React-App](https://github.com/facebook/create-react-app) and [Chakra UI](https://github.com/chakra-ui/chakra-ui/) using [Gmail's public Javascript API](https://developers.google.com/gmail/api/).
 
 **How does it work?**  
@@ -17,7 +19,7 @@ The account sign-in and authentication process is **totally managed by Gmail's s
 - All Gmail API requests require an ***API Key*** and an ***OAuth 2.0 Client ID***. You can follow [these instructions](https://developers.google.com/fit/android/get-api-key) to obtain those credentials. Then, store those two values in the ***[.env](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables)*** file located in the root folder by replacing `<YOUR_API_KEY>` and `<YOUR_CLIENT_ID>` respectively.
 
 
-Features:
+### Features:
 - Read, Send, Reply, Forward, Archive, Move to Trash.
 
 LICENSE: [MIT License](https://opensource.org/licenses/MIT)
