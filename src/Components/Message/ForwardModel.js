@@ -1,8 +1,7 @@
 import React from "react";
 import { Base64 } from "js-base64";
-import { MdReplay } from "react-icons/md";
+import { MdReplay, MdArrowForward } from "react-icons/md";
 import { getHeader, isEmpty } from "../Helper";
-
 import {
   Button,
   Modal,
@@ -18,7 +17,6 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/core";
-import { MdArrowForward } from "react-icons/md";
 
 const ForwardModel = ({ forwardData, getMessageBody }) => {
   console.log("ForwardModel Component", forwardData);
@@ -38,15 +36,24 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
   };
 
   let handleForwardMsg = (forwardTo, headers, body) => {
-    var msg = "";
-    msg += "From: " + getHeader(headers, "From") + "\r\n";
-    msg += "Date: " + getHeader(headers, "Date") + "\r\n";
-    msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
-    msg += "To: " + forwardTo + "\r\n";
-    msg += "Content-Type: text/html; charset=UTF-8" + "\r\n";
-    msg += "\r\n" + body;
+    // var msg = "";
+    // msg += "From: " + getHeader(headers, "From") + "\r\n";
+    // msg += "Date: " + getHeader(headers, "Date") + "\r\n";
+    // msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
+    // msg += "To: " + forwardTo + "\r\n";
+    // msg += "Content-Type: text/html; charset=UTF-8" + "\r\n";
+    // msg += "\r\n" + body;
 
-    sendMessage("me", msg, handleForwardResponse);
+    const msgBody = `From: ${getHeader(headers, "From")}
+      Date: ${getHeader(headers, "Date")}
+      Subject: ${getHeader(headers, "Subject")}
+      To: ${forwardTo}
+      Content-Type: text/html; charset=UTF-8
+
+      ${body}
+      `;
+
+    sendMessage("me", msgBody, handleForwardResponse);
   };
 
   let sendMessage = (userId, email, callback) => {
@@ -65,8 +72,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     if (res.result) {
       if (res.result.labelIds.indexOf("SENT") !== -1) {
         toast({
-          title: "Email Replay Sent.",
-          description: "We've Sent your replay.",
+          title: "Email forwarded Successfully.",
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -75,7 +81,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     } else {
       toast({
         title: "An error occurred.",
-        description: "Unable to sent your replay.",
+        description: "Unable to sent your mail.",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -115,7 +121,6 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
                   <Input
                     type='email'
                     id='emailTo'
-                    name='To'
                     placeholder='To'
                     aria-describedby='email-helper-text'
                   />
@@ -124,7 +129,6 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
                   <Input
                     type='text'
                     id='subject'
-                    name='Subject'
                     placeholder='Subject'
                     aria-describedby='subject-email-helper-text'
                     value={getHeader(forwardData.payload.headers, "Subject")}
@@ -134,7 +138,6 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
                 <FormControl isRequired>
                   <Textarea
                     id='message'
-                    name='message'
                     minH='280px'
                     size='xl'
                     resize='vertical'

@@ -172,7 +172,7 @@ export class App extends Component {
 
   render() {
     console.log(this.state);
-    const { message, messages, messagesRow } = this.state;
+    const { message, messagesRow } = this.state;
 
     return (
       <React.Fragment>

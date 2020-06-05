@@ -12,7 +12,6 @@ import {
   Avatar,
   Text,
   useToast,
-  Spinner,
 } from "@chakra-ui/core";
 
 import { MdArchive, MdArrowForward } from "react-icons/md";
@@ -53,8 +52,7 @@ const Message = ({ message }) => {
         if (resp.status === 200) {
           toast({
             title: "Message Deleted",
-            description: "We've Delete this Message.",
-            status: "success",
+            status: "error",
             duration: 3000,
             isClosable: true,
           });
@@ -65,7 +63,7 @@ const Message = ({ message }) => {
         toast({
           title: "An error occurred.",
           description: "Unable to Delete Message.",
-          status: "error",
+          status: "warning",
           duration: 3000,
           isClosable: true,
         });
@@ -133,7 +131,6 @@ const Message = ({ message }) => {
     return "";
   };
 
-
   if (!isEmpty(message)) {
     return (
       <Flex
@@ -151,20 +148,6 @@ const Message = ({ message }) => {
         <Flex justify='space-around' wrap='no-wrap' mb={2}>
           <ReplyModel replayData={formatReplayData(message.payload.headers)} />
           <ForwardModel forwardData={message} getMessageBody={getMessageBody} />
-          {/* <Button
-            rightIcon={MdArrowForward}
-            variantColor='teal'
-            variant='outline'
-            onClick={() =>
-              handleForwardMsg(
-                "eclipsegk10@gmail.com",
-                message.payload.headers,
-                getMessageBody(message.payload)
-              )
-            }
-          >
-            Forward
-          </Button> */}
 
           <Button
             rightIcon={MdArchive}
@@ -182,11 +165,6 @@ const Message = ({ message }) => {
           >
             Delete
           </Button>
-          {/*
-            <Button variantColor='teal' variant='outline'>
-              <Box as={MdMoreHoriz} size='22px' />
-            </Button>
-          */}
         </Flex>
 
         {/* Mail Container */}
@@ -203,7 +181,8 @@ const Message = ({ message }) => {
                 mr={4}
               />
               <Box w='80%'>
-                SAK<Text fontSize='md' color='gray.700'>
+                SAK
+                <Text fontSize='md' color='gray.700'>
                   {getHeader(headers, "From")}
                 </Text>
                 <Text fontSize='sm' color='gray.500'>
@@ -264,40 +243,10 @@ const Message = ({ message }) => {
           display='flex'
           align='center'
           justifyContent='center'
-        >
-          {/* <Spinner
-            thickness='4px'
-            speed='0.65s'
-            emptyColor='gray.200'
-            color='blue.500'
-            size='xl'
-          /> */}
-        </Box>
+        ></Box>
       </Flex>
     );
   }
 };
 
 export default Message;
-
-// let deleteMessage = (userId, messageId) => {
-//   console.log("Delete Message...");
-//   var request = window.gapi.client.gmail.users.messages.delete({
-//     userId: userId,
-//     id: messageId,
-//   });
-//   request.execute((resp) => {
-//     console.log(resp);
-//   });
-// };
-
-// {
-//   to: `Lamsadi Khalid <lamsadikhalid@gmail.com>`,
-//   subject: "Re: Sent from Mail app",
-//   msgId: "<5ed91a94.1c69fb81.7e46c.d6a1@mx.google.com>",
-// }
-
-// React.useEffect(() => {
-//   console.log("mount it!");
-//   // addToFrame(message);
-// }, []);

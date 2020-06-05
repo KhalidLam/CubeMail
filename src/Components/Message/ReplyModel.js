@@ -35,7 +35,6 @@ const ReplyModel = ({ replayData }) => {
     console.log(emailTo, subject, replayMsgId, message);
 
     // Send Replay
-    // getHeader(message.payload.headers, "Message-ID")
     sendMessage(
       {
         To: emailTo,
@@ -70,8 +69,7 @@ const ReplyModel = ({ replayData }) => {
     if (res.result) {
       if (res.result.labelIds.indexOf("SENT") !== -1) {
         toast({
-          title: "Email Replay Sent.",
-          description: "We've Sent your replay.",
+          title: "Message Sent.",
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -109,7 +107,6 @@ const ReplyModel = ({ replayData }) => {
                 <Input
                   type='hidden'
                   id='reply-message-id'
-                  name='reply-message-id'
                   value={replayData.msgId}
                   readOnly
                 />
@@ -117,7 +114,6 @@ const ReplyModel = ({ replayData }) => {
                   <Input
                     type='email'
                     id='emailTo'
-                    name='To'
                     placeholder='To'
                     aria-describedby='email-helper-text'
                     value={replayData.to}
@@ -128,7 +124,6 @@ const ReplyModel = ({ replayData }) => {
                   <Input
                     type='text'
                     id='subject'
-                    name='Subject'
                     placeholder='Subject'
                     aria-describedby='subject-email-helper-text'
                     value={replayData.subject}
@@ -138,9 +133,6 @@ const ReplyModel = ({ replayData }) => {
                 <FormControl isRequired>
                   <Textarea
                     id='message'
-                    name='message'
-                    // value={value}
-                    // onChange={handleInputChange}
                     minH='280px'
                     size='xl'
                     resize='vertical'

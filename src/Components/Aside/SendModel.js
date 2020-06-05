@@ -22,6 +22,7 @@ const SendModel = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+
   let handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -41,18 +42,6 @@ const SendModel = () => {
       message,
       handleSendResponse
     );
-
-    // Send Replay
-    // getHeader(message.payload.headers, "Message-ID")
-    // sendMessage(
-    //   {
-    //     To: emailTo,
-    //     Subject: emailTo,
-    //     "In-Reply-To": replayMsgId,
-    //   },
-    //   message,
-    //   handleReplayResponse
-    // );
   };
 
   let sendMessage = (headers_obj, message, callback) => {
@@ -77,7 +66,7 @@ const SendModel = () => {
     console.log(res.result);
     if (res.result.labelIds.indexOf("SENT") !== -1) {
       toast({
-        title: "Email Sent.",
+        title: "Message Sent.",
         description: "We've Sent your email.",
         status: "success",
         duration: 9000,
@@ -120,7 +109,6 @@ const SendModel = () => {
                 <Input
                   type='email'
                   id='emailTo'
-                  name='To'
                   placeholder='To'
                   aria-describedby='email-helper-text'
                 />
@@ -129,7 +117,6 @@ const SendModel = () => {
                 <Input
                   type='text'
                   id='subject'
-                  name='Subject'
                   placeholder='Subject'
                   aria-describedby='subject-email-helper-text'
                 />
@@ -137,9 +124,6 @@ const SendModel = () => {
               <FormControl isRequired>
                 <Textarea
                   id='message'
-                  name='message'
-                  // value={value}
-                  // onChange={handleInputChange}
                   minH='280px'
                   size='xl'
                   resize='vertical'
@@ -151,19 +135,7 @@ const SendModel = () => {
               <Button type='reset' variantColor='blue' mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button
-                type='submit'
-                variantColor='green'
-                // onClick={() =>
-                //   toast({
-                //     title: "Email Sent.",
-                //     description: "We've Sent your email.",
-                //     status: "success",
-                //     duration: 9000,
-                //     isClosable: true,
-                //   })
-                // }
-              >
+              <Button type='submit' variantColor='green'>
                 Send
               </Button>
             </ModalFooter>

@@ -1,13 +1,13 @@
 import React from "react";
 import SendModel from "./SendModel";
 import { Button, Box, List, ListItem } from "@chakra-ui/core";
-import { MdLabel, MdStar, MdPeople, MdLoyalty } from "react-icons/md";
+import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
 import { FiSend, FiFile } from "react-icons/fi";
 
 const Aside = ({ getMessagesByCategory }) => {
   console.log("Aside Component");
   return (
-    <>
+    <React.Fragment>
       <Box w='16%' h='100%' bg='#00043c' color='white'>
         <List>
           {/* Send Model */}
@@ -21,7 +21,7 @@ const Aside = ({ getMessagesByCategory }) => {
               h='45px'
               py={2}
               pl={8}
-              leftIcon='email'
+              leftIcon={MdInbox}
               justifyContent='flex-start'
               bg='#353863'
               _hover={{ bg: "#89b0c7" }}
@@ -144,7 +144,7 @@ const Aside = ({ getMessagesByCategory }) => {
           </ListItem>
         </List>
       </Box>
-    </>
+    </React.Fragment>
   );
 };
 

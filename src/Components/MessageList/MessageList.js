@@ -12,31 +12,6 @@ import {
   Spinner,
 } from "@chakra-ui/core";
 
-const SingleMessage = ({ name, subject, msg }) => (
-  <Flex
-    wrap='no-wrap'
-    justify='space-around'
-    py={2}
-    borderTop='1px'
-    borderBottom='1px'
-    borderColor='gray.200'
-    cursor='pointer'
-  >
-    <Avatar name={name} src='https://bit.ly/tioluwani-kolawole' />
-    <Box w='80%'>
-      <Text fontSize='sm' color='gray.700' isTruncated>
-        {removeQuote(name)}
-      </Text>
-      <Text fontSize='md' fontWeight='bold' color='#3182ce' isTruncated>
-        {subject}
-      </Text>
-      <Text fontSize='xs' color='gray.500'>
-        {decodeHtml(msg)}
-      </Text>
-    </Box>
-  </Flex>
-);
-
 const Messages = ({ handleMessageClick, messagesRow }) => {
   console.log("Messages List Component");
   console.log(messagesRow);
@@ -158,14 +133,3 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
 };
 
 export default Messages;
-
-{
-  /* <SingleMessage
-    key={message.id}
-    name={removeQuote(
-      getHeader(message.payload.headers, "From").split("<")[0]
-    )}
-    subject={getHeader(message.payload.headers, "Subject")}
-    msg={message.snippet.substr(0, 75)}
-  /> */
-}
