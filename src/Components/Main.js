@@ -2,12 +2,11 @@ import React from "react";
 import Aside from "./Aside";
 import MessageList from "./MessageList";
 import Message from "./Message";
-import { Box, Heading, Flex, Text, Button, useToast } from "@chakra-ui/core";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { Flex } from "@chakra-ui/core";
 
-const Main = (props) => {
+const Main = ({ message }) => {
   return (
-    <>
+    <React.Fragment>
       <Flex
         h='100vh'
         minH='600px'
@@ -19,9 +18,9 @@ const Main = (props) => {
       >
         <Aside />
         <MessageList />
-        <Message />
+        <Message message={message} />
       </Flex>
-    </>
+    </React.Fragment>
   );
 };
 

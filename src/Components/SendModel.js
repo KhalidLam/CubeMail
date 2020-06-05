@@ -13,11 +13,15 @@ import {
   FormControl,
   Textarea,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/core";
+import { BsPlusCircle } from "react-icons/bs";
 
-const SendModel = ({ isOpen, onClose }) => {
+const SendModel = () => {
+  console.log("SendModel...");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-
   let handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -32,15 +36,14 @@ const SendModel = ({ isOpen, onClose }) => {
     sendMessage(
       {
         To: emailTo,
-        Subject: emailTo,
+        Subject: subject,
       },
       message,
-      () => {
-        console.log("Msg Sent!");
-      }
+      handleSendResponse
     );
 
     // Send Replay
+    // getHeader(message.payload.headers, "Message-ID")
     // sendMessage(
     //   {
     //     To: emailTo,
@@ -48,9 +51,7 @@ const SendModel = ({ isOpen, onClose }) => {
     //     "In-Reply-To": replayMsgId,
     //   },
     //   message,
-    //   () => {
-    //     console.log("Replay Sent Successfully");
-    //   }
+    //   handleReplayResponse
     // );
   };
 
@@ -72,8 +73,42 @@ const SendModel = ({ isOpen, onClose }) => {
     request.execute(callback);
   };
 
+  let handleSendResponse = (res) => {
+    console.log(res.result);
+    if (res.result.labelIds.indexOf("SENT") !== -1) {
+      toast({
+        title: "Email Sent.",
+        description: "We've Sent your email.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "An error occurred.",
+        description: "Unable to sent your email.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <React.Fragment>
+      <Button
+        w='100%'
+        h='48px'
+        leftIcon={BsPlusCircle}
+        border='1px'
+        borderRadius='20px'
+        borderColor='green.500'
+        variantColor='green'
+        variant='solid'
+        onClick={onOpen}
+      >
+        Compose mail
+      </Button>
       <Modal isOpen={isOpen} size='xl' onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -119,15 +154,15 @@ const SendModel = ({ isOpen, onClose }) => {
               <Button
                 type='submit'
                 variantColor='green'
-                onClick={() =>
-                  toast({
-                    title: "Email Sent.",
-                    description: "We've Sent your email.",
-                    status: "success",
-                    duration: 9000,
-                    isClosable: true,
-                  })
-                }
+                // onClick={() =>
+                //   toast({
+                //     title: "Email Sent.",
+                //     description: "We've Sent your email.",
+                //     status: "success",
+                //     duration: 9000,
+                //     isClosable: true,
+                //   })
+                // }
               >
                 Send
               </Button>

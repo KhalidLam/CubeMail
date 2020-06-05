@@ -37,6 +37,7 @@ const SingleMessage = ({ name, subject, msg }) => (
 );
 
 const Messages = () => {
+  console.log("Messages List Component");
   return (
     <React.Fragment>
       {/* Container */}
