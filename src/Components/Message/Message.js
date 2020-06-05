@@ -133,30 +133,6 @@ const Message = ({ message }) => {
     return "";
   };
 
-  // let handleForwardMsg = (userId, headers, body) => {
-  //   var msg = "";
-  //   msg += "From: " + getHeader(headers, "From") + "\r\n";
-  //   msg += "Date: " + getHeader(headers, "Date") + "\r\n";
-  //   msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
-  //   msg += "To: " + getHeader(headers, "To") + "\r\n";
-  //   msg += "Content-Type: " + getHeader(headers, "Content-Type") + "\r\n";
-  //   msg += "\r\n" + body;
-
-  //   sendMessage(userId, msg, (res) => {
-  //     console.log("Sending..", res);
-  //   });
-  // };
-
-  // let sendMessage = (userId, email, callback) => {
-  //   var base64EncodedEmail = Base64.encodeURI(email);
-  //   var request = window.gapi.client.gmail.users.messages.send({
-  //     userId: userId,
-  //     resource: {
-  //       raw: base64EncodedEmail,
-  //     },
-  //   });
-  //   request.execute(callback);
-  // };
 
   if (!isEmpty(message)) {
     return (
@@ -243,12 +219,7 @@ const Message = ({ message }) => {
           {/* Body Mail */}
           <Box className='mailBody'>
             <AspectRatioBox ratio={16 / 9}>
-              <Box
-                as='iframe'
-                id='iframe'
-                title='messageBody'
-                srcdoc='<p>Hello world!</p>'
-              >
+              <Box as='iframe' id='iframe' title='messageBody'>
                 <p>Your browser does not support iframes.</p>
               </Box>
             </AspectRatioBox>
@@ -294,13 +265,13 @@ const Message = ({ message }) => {
           align='center'
           justifyContent='center'
         >
-          <Spinner
+          {/* <Spinner
             thickness='4px'
             speed='0.65s'
             emptyColor='gray.200'
             color='blue.500'
             size='xl'
-          />
+          /> */}
         </Box>
       </Flex>
     );

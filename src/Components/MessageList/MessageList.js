@@ -37,7 +37,7 @@ const SingleMessage = ({ name, subject, msg }) => (
   </Flex>
 );
 
-const Messages = ({ messages, messagesRow }) => {
+const Messages = ({ handleMessageClick, messagesRow }) => {
   console.log("Messages List Component");
   console.log(messagesRow);
 
@@ -70,16 +70,45 @@ const Messages = ({ messages, messagesRow }) => {
 
           {/* Message List */}
           <Box overflowY='auto'>
-            {messagesRow.map((message) => (
-              <SingleMessage
-                key={message.id}
-                name={removeQuote(
-                  getHeader(message.payload.headers, "From").split("<")[0]
-                )}
-                subject={getHeader(message.payload.headers, "Subject")}
-                msg={message.snippet.substr(0, 75)}
-              />
-            ))}
+            {messagesRow.map((message) => {
+              const name = removeQuote(
+                getHeader(message.payload.headers, "From").split("<")[0]
+              );
+              const subject = getHeader(message.payload.headers, "Subject");
+              const msg = message.snippet.substr(0, 75);
+              return (
+                <Flex
+                  key={message.id}
+                  id={message.id}
+                  onClick={handleMessageClick}
+                  wrap='no-wrap'
+                  justify='space-around'
+                  py={2}
+                  borderTop='1px'
+                  borderBottom='1px'
+                  borderColor='gray.200'
+                  cursor='pointer'
+                >
+                  <Avatar name={name} src='https://bit.ly/tioluwani-kolawole' />
+                  <Box w='80%'>
+                    <Text fontSize='sm' color='gray.700' isTruncated>
+                      {removeQuote(name)}
+                    </Text>
+                    <Text
+                      fontSize='md'
+                      fontWeight='bold'
+                      color='#3182ce'
+                      isTruncated
+                    >
+                      {subject}
+                    </Text>
+                    <Text fontSize='xs' color='gray.500'>
+                      {decodeHtml(msg)}
+                    </Text>
+                  </Box>
+                </Flex>
+              );
+            })}
           </Box>
         </Flex>
       </React.Fragment>
@@ -129,3 +158,14 @@ const Messages = ({ messages, messagesRow }) => {
 };
 
 export default Messages;
+
+{
+  /* <SingleMessage
+    key={message.id}
+    name={removeQuote(
+      getHeader(message.payload.headers, "From").split("<")[0]
+    )}
+    subject={getHeader(message.payload.headers, "Subject")}
+    msg={message.snippet.substr(0, 75)}
+  /> */
+}

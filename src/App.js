@@ -12,7 +12,6 @@ export class App extends Component {
       messages: [],
       messagesRow: [],
       message: {},
-      labels: [],
     };
   }
 
@@ -143,7 +142,7 @@ export class App extends Component {
             });
           });
 
-          this.getOneMessage();
+          // this.getOneMessage();
         },
         (err) => {
           console.error("getMessages error", err);
@@ -151,9 +150,9 @@ export class App extends Component {
       );
   };
 
-  getOneMessage = () => {
+  getOneMessage = (messageId) => {
     console.log("getOneMessage...");
-    const messageId = this.state.messages[2].id;
+
     console.log("Message ID : ", messageId);
 
     return window.gapi.client.gmail.users.messages
@@ -173,6 +172,14 @@ export class App extends Component {
           console.error("getMessage error", err);
         }
       );
+  };
+
+  handleMessageClick = (e) => {
+    console.log("handleMessageClick...");
+    console.log("currentTarget", e.currentTarget);
+    var messageId = e.currentTarget.getAttribute("id");
+    console.log("Message ID : ", messageId);
+    this.getOneMessage(messageId);
   };
 
   render() {
@@ -202,10 +209,13 @@ export class App extends Component {
             bg='#e5f4f1'
             color='white'
           >
-            <Aside />
-            <MessageList messages={messages} messagesRow={messagesRow} />
+            <Aside getMessages={this.getMessages} />
+            <MessageList
+              handleMessageClick={this.handleMessageClick}
+              messagesRow={messagesRow}
+            />
             <Message message={message} />
-            {/* <MessageCp message={message} /> */}
+
           </Flex>
 
           {/* <Main message={this.state.message} /> */}
