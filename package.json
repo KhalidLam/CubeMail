@@ -1,7 +1,7 @@
 {
   "name": "react-gmail-api",
   "version": "1.0.0",
-  "description": "react test ",
+  "description": "Gmail React App using JavaScript Gmail API",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
