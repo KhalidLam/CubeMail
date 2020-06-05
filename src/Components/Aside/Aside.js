@@ -8,7 +8,14 @@ const Aside = ({ getMessagesByCategory }) => {
   console.log("Aside Component");
   return (
     <React.Fragment>
-      <Box w='16%' h='100%' bg='#00043c' color='white'>
+      <Box
+        w='16%'
+        h='100%'
+        bg='#00043c'
+        color='white'
+        borderTopLeftRadius='md'
+        borderBottomLeftRadius='md'
+      >
         <List>
           {/* Send Model */}
           <ListItem p='0.5rem 1rem 1rem'>

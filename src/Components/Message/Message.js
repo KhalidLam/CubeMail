@@ -140,9 +140,11 @@ const Message = ({ message }) => {
         h='100%'
         p='0.6rem 1rem'
         bg='white'
+        color='black'
         border='1px'
         borderColor='gray.200'
-        color='black'
+        borderTopRightRadius='md'
+        borderBottomRightRadius='md'
       >
         {/* Header Buttons */}
         <Flex justify='space-around' wrap='no-wrap' mb={2}>
@@ -215,27 +217,14 @@ const Message = ({ message }) => {
         h='100%'
         p='0.6rem 1rem'
         bg='white'
+        color='black'
         border='1px'
         borderColor='gray.200'
-        color='black'
+        borderTopRightRadius='md'
+        borderBottomRightRadius='md'
       >
         {/* Header Buttons */}
-        <Flex justify='space-around' wrap='no-wrap' mb={2}>
-          <ReplyModel replayData={{}} />
-          <Button
-            rightIcon={MdArrowForward}
-            variantColor='teal'
-            variant='outline'
-          >
-            Forward
-          </Button>
-          <Button rightIcon={MdArchive} variantColor='teal' variant='outline'>
-            Archive
-          </Button>
-          <Button rightIcon='delete' variantColor='teal' variant='outline'>
-            Delete
-          </Button>
-        </Flex>
+        <Flex justify='space-around' wrap='no-wrap' mb={2}></Flex>
         <Box
           className='mailContainer'
           mt={6}
