@@ -203,7 +203,7 @@ const Message = ({ message }) => {
                 mr={4}
               />
               <Box w='80%'>
-                <Text fontSize='md' color='gray.700'>
+                SAK<Text fontSize='md' color='gray.700'>
                   {getHeader(headers, "From")}
                 </Text>
                 <Text fontSize='sm' color='gray.500'>

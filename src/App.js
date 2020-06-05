@@ -103,46 +103,11 @@ export class App extends Component {
             : [];
           this.setState({
             messages: messages,
+            messagesRow: [],
           });
 
           // Create & send request for each message id from messages List
-          // response.result.messages.forEach((messageRequest) => {
-          //   messageRequest = window.gapi.client.gmail.users.messages.get({
-          //     userId: "me",
-          //     id: messageRequest.id,
-          //     format: "metadata",
-          //   });
-          //   messageRequest.execute((resp) => {
-          //     console.log("Message Row: ", resp);
-          //     this.setState({
-          //       messagesRow: resp,
-          //     });
-          //   });
-          // });
-
-          // Use Batch
-          var batch = window.gapi.client.newBatch();
-          messages.forEach((message) => {
-            var request = window.gapi.client.request({
-              path: `/gmail/v1/users/me/messages/${message.id}`,
-            });
-            batch.add(request);
-          });
-
-          batch.execute((res) => {
-            let rowsArray = [];
-            for (var key in res) {
-              if (res.hasOwnProperty(key)) {
-                rowsArray.push(res[key].result);
-              }
-            }
-            console.log("Msg Rows", rowsArray);
-            this.setState({
-              messagesRow: rowsArray,
-            });
-          });
-
-          // this.getOneMessage();
+          this.getMessagesRow(messages);
         },
         (err) => {
           console.error("getMessages error", err);
@@ -150,10 +115,29 @@ export class App extends Component {
       );
   };
 
+  getMessagesRow = (messages) => {
+    messages.map((message) => {
+      return window.gapi.client.gmail.users.messages
+        .get({
+          userId: "me",
+          id: message.id,
+        })
+        .then(
+          (response) => {
+            console.log("getMessagesRow...", response);
+            this.setState((state) => ({
+              messagesRow: [...state.messagesRow, response.result],
+            }));
+          },
+          (err) => {
+            console.error("getMessagesRow error", err);
+          }
+        );
+    });
+  };
+
   getOneMessage = (messageId) => {
     console.log("getOneMessage...");
-
-    console.log("Message ID : ", messageId);
 
     return window.gapi.client.gmail.users.messages
       .get({
@@ -162,11 +146,9 @@ export class App extends Component {
       })
       .then(
         (response) => {
-          // var messages = response.result.messages;
           this.setState({
             message: response.result,
           });
-          // this.getMessageBody(response.result.payload);
         },
         (err) => {
           console.error("getMessage error", err);
@@ -177,9 +159,15 @@ export class App extends Component {
   handleMessageClick = (e) => {
     console.log("handleMessageClick...");
     console.log("currentTarget", e.currentTarget);
-    var messageId = e.currentTarget.getAttribute("id");
+    const messageId = e.currentTarget.getAttribute("id");
     console.log("Message ID : ", messageId);
     this.getOneMessage(messageId);
+  };
+
+  getMessagesByCategory = (e) => {
+    var categoryId = e.target.id;
+    console.log(categoryId);
+    this.getMessages([categoryId]);
   };
 
   render() {
@@ -209,16 +197,13 @@ export class App extends Component {
             bg='#e5f4f1'
             color='white'
           >
-            <Aside getMessages={this.getMessages} />
+            <Aside getMessagesByCategory={this.getMessagesByCategory} />
             <MessageList
               handleMessageClick={this.handleMessageClick}
               messagesRow={messagesRow}
             />
             <Message message={message} />
-
           </Flex>
-
-          {/* <Main message={this.state.message} /> */}
         </ThemeProvider>
       </React.Fragment>
     );
