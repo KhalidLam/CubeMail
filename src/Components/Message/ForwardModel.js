@@ -34,15 +34,15 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
   };
 
   let handleForwardMsg = (forwardTo, headers, body) => {
-    var msg = "";
-    msg += "From: " + getHeader(headers, "From") + "\r\n";
-    msg += "Date: " + getHeader(headers, "Date") + "\r\n";
-    msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
-    msg += "To: " + forwardTo + "\r\n";
-    msg += "Content-Type: text/html; charset=UTF-8" + "\r\n";
-    msg += "\r\n" + body;
+    var email = "";
+    email += `From: ${getHeader(headers, "From")} \r\n`;
+    email += `Date: ${getHeader(headers, "Date")} \r\n`;
+    email += `Subject: ${getHeader(headers, "Subject")} \r\n`;
+    email += `To: ${forwardTo} \r\n`;
+    email += `Content-Type: text/html; charset=UTF-8 \r\n`;
+    email += `\r\n ${body}`;
 
-    sendMessage("me", msg, handleForwardResponse);
+    sendMessage("me", email, handleForwardResponse);
   };
 
   let sendMessage = (userId, email, callback) => {
