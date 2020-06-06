@@ -18,7 +18,6 @@ import {
 import { BsPlusCircle } from "react-icons/bs";
 
 const SendModel = () => {
-  console.log("SendModel...");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -30,8 +29,6 @@ const SendModel = () => {
     const subject = form.elements["subject"].value;
     const message = form.elements["message"].value;
 
-    console.log(e.target);
-    console.log(emailTo, subject, message);
 
     // Send Simple Mail
     sendMessage(
@@ -63,7 +60,6 @@ const SendModel = () => {
   };
 
   let handleSendResponse = (res) => {
-    console.log(res.result);
     if (res.result.labelIds.indexOf("SENT") !== -1) {
       toast({
         title: "Message Sent.",

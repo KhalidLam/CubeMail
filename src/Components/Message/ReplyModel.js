@@ -19,7 +19,6 @@ import {
 } from "@chakra-ui/core";
 
 const ReplyModel = ({ replayData }) => {
-  console.log("ReplyModel Component", replayData);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -31,14 +30,11 @@ const ReplyModel = ({ replayData }) => {
     const replayMsgId = form.elements["reply-message-id"].value;
     const message = form.elements["message"].value;
 
-    console.log(e.target);
-    console.log(emailTo, subject, replayMsgId, message);
-
     // Send Replay
     sendMessage(
       {
         To: emailTo,
-        Subject: emailTo,
+        Subject: subject,
         "In-Reply-To": replayMsgId,
       },
       message,
@@ -65,7 +61,6 @@ const ReplyModel = ({ replayData }) => {
   };
 
   let handleReplayResponse = (res) => {
-    console.log(res.result);
     if (res.result) {
       if (res.result.labelIds.indexOf("SENT") !== -1) {
         toast({

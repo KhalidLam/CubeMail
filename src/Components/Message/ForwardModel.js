@@ -19,8 +19,6 @@ import {
 } from "@chakra-ui/core";
 
 const ForwardModel = ({ forwardData, getMessageBody }) => {
-  console.log("forwardData => ", forwardData);
-  // console.log("getMessageBody => ", getMessageBody);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -28,7 +26,6 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     e.preventDefault();
     const form = e.target;
     const forwardTo = form.elements["emailTo"].value;
-    console.log(forwardTo);
     handleForwardMsg(
       forwardTo,
       forwardData.payload.headers,
@@ -60,7 +57,6 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
   };
 
   let handleForwardResponse = (res) => {
-    console.log(res);
     if (res.result) {
       if (res.result.labelIds.indexOf("SENT") !== -1) {
         toast({

@@ -14,8 +14,6 @@ import {
 } from "@chakra-ui/core";
 
 const Messages = ({ handleMessageClick, messagesRow }) => {
-  console.log("Messages List Component");
-  console.log(messagesRow);
 
   let displaySkeleton = () => {
     return [1, 2, 3, 4, 5].map((i) => (

@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/core";
 
 const Message = ({ message }) => {
-  console.log("Message Component", message);
   const headers = isEmpty(message) ? [] : message.payload.headers;
   const toast = useToast();
 

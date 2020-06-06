@@ -43,7 +43,6 @@ export class App extends Component {
   handleAuthResult = (authResult) => {
     if (authResult && !authResult.error) {
       console.log("Sign-in successful");
-      console.log(authResult);
       this.hideAuthBtn();
       this.loadClient();
     } else {
@@ -75,7 +74,7 @@ export class App extends Component {
   loadClient = () => {
     return window.gapi.client.load("gmail", "v1").then(
       (res) => {
-        console.log("window.gapi client loaded for API");
+        console.log("gapi client loaded for API");
         this.getMessages();
       },
       (err) => {
@@ -94,8 +93,6 @@ export class App extends Component {
       .then(
         (response) => {
           // Handle the results here (response.result has the parsed body).
-          console.log("getMessages...");
-          console.log(response.result);
 
           const messages = response.result.messages
             ? response.result.messages
@@ -123,7 +120,6 @@ export class App extends Component {
         })
         .then(
           (response) => {
-            console.log("getMessagesRow...", response);
             this.setState((state) => ({
               messagesRow: [...state.messagesRow, response.result],
             }));
@@ -136,8 +132,6 @@ export class App extends Component {
   };
 
   getOneMessage = (messageId) => {
-    console.log("getOneMessage...");
-
     return window.gapi.client.gmail.users.messages
       .get({
         userId: "me",
@@ -156,26 +150,20 @@ export class App extends Component {
   };
 
   handleMessageClick = (e) => {
-    console.log("handleMessageClick...");
-    console.log("currentTarget", e.currentTarget);
     const messageId = e.currentTarget.getAttribute("id");
-    console.log("Message ID : ", messageId);
     this.getOneMessage(messageId);
   };
 
   getMessagesByCategory = (e) => {
     const btn = e.target;
     const categoryId = btn.id;
-    console.log(categoryId);
-    // Change Style -> Todo
-    console.log(btn);
+    // Todo -> Change Style
 
     // Get Messages using clicked category
     this.getMessages([categoryId]);
   };
 
   render() {
-    console.log(this.state);
     const { message, messagesRow } = this.state;
 
     return (

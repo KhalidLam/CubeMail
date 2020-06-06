@@ -6,7 +6,6 @@ import { FiSend, FiFile } from "react-icons/fi";
 import "./Aside.css";
 
 const Aside = ({ getMessagesByCategory }) => {
-  console.log("Aside Component");
   return (
     <React.Fragment>
       <Box
