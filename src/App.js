@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Aside from "./Components/Aside/Aside";
 import MessageList from "./Components/MessageList/MessageList";
 import Message from "./Components/Message/Message";
-import { Api } from "./Components/Api";
 import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 
 export class App extends Component {
@@ -19,11 +18,11 @@ export class App extends Component {
     window.gapi.load("client:auth2", {
       callback: () => {
         // Handle gapi.client initialization.
-        window.gapi.client.setApiKey(Api.API_KEY);
+        window.gapi.client.setApiKey(process.env.REACT_APP_API_KEY);
         window.gapi.auth.authorize(
           {
-            client_id: Api.CLIENT_ID,
-            scope: Api.SCOPES,
+            client_id: process.env.REACT_APP_CLIENT_ID,
+            scope: process.env.REACT_APP_SCOPES,
             immediate: true,
           },
           this.handleAuthResult
@@ -65,8 +64,8 @@ export class App extends Component {
   handleAuthClick = () => {
     return window.gapi.auth.authorize(
       {
-        client_id: Api.CLIENT_ID,
-        scope: Api.SCOPES,
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        scope: process.env.REACT_APP_SCOPES,
         immediate: false,
       },
       this.handleAuthResult

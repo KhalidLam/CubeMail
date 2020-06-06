@@ -20,6 +20,7 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
   let displaySkeleton = () => {
     return [1, 2, 3, 4, 5].map((i) => (
       <Flex
+        key={i}
         justify='space-around'
         py={2}
         borderTop='1px'
