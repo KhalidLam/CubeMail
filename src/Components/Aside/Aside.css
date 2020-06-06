@@ -1,0 +1,16 @@
+.labelBtn {
+    background-color: transparent !important;
+    color: #3182ce;
+}
+
+.labelBtn:hover {
+    background-color: #ebf8ff !important;
+}
+
+.activeBtn {
+    background-color: #353863 !important;
+}
+
+.activeBtn:hover {
+    background-color: #89b0c7 !important;
+}

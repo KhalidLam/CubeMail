@@ -165,8 +165,13 @@ export class App extends Component {
   };
 
   getMessagesByCategory = (e) => {
-    var categoryId = e.target.id;
+    const btn = e.target;
+    const categoryId = btn.id;
     console.log(categoryId);
+    // Change Style -> Todo
+    console.log(btn);
+
+    // Get Messages using clicked category
     this.getMessages([categoryId]);
   };
 

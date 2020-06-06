@@ -3,6 +3,7 @@ import SendModel from "./SendModel";
 import { Button, Box, List, ListItem } from "@chakra-ui/core";
 import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
 import { FiSend, FiFile } from "react-icons/fi";
+import "./Aside.css";
 
 const Aside = ({ getMessagesByCategory }) => {
   console.log("Aside Component");
@@ -21,17 +22,18 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem p='0.5rem 1rem 1rem'>
             <SendModel />
           </ListItem>
+
+          {/* Labels Buttons */}
           <ListItem>
             <Button
               id='INBOX'
+              className='activeBtn'
               w='100%'
               h='45px'
               py={2}
               pl={8}
               leftIcon={MdInbox}
               justifyContent='flex-start'
-              bg='#353863'
-              _hover={{ bg: "#89b0c7" }}
               onClick={getMessagesByCategory}
             >
               Inbox
@@ -40,14 +42,13 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem>
             <Button
               id='STARRED'
+              className='labelBtn'
               w='100%'
               h='45px'
               py={2}
               pl={8}
               leftIcon={MdStar}
               justifyContent='flex-start'
-              variantColor='blue'
-              variant='ghost'
               onClick={getMessagesByCategory}
             >
               Starred
@@ -56,6 +57,7 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem>
             <Button
               id='IMPORTANT'
+              className='labelBtn'
               w='100%'
               h='45px'
               py={2}
@@ -72,6 +74,7 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem>
             <Button
               id='SENT'
+              className='labelBtn'
               w='100%'
               h='45px'
               py={2}
@@ -88,6 +91,7 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem>
             <Button
               id='DRAFT'
+              className='labelBtn'
               w='100%'
               h='45px'
               py={2}
@@ -104,6 +108,7 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem>
             <Button
               id='TRASH'
+              className='labelBtn'
               w='100%'
               h='45px'
               py={2}
@@ -120,6 +125,7 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem>
             <Button
               id='CATEGORY_SOCIAL'
+              className='labelBtn'
               w='100%'
               h='45px'
               py={2}
@@ -136,6 +142,7 @@ const Aside = ({ getMessagesByCategory }) => {
           <ListItem>
             <Button
               id='CATEGORY_PROMOTIONS'
+              className='labelBtn'
               w='100%'
               h='45px'
               py={2}
