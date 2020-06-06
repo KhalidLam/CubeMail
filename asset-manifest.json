@@ -1,19 +1,22 @@
 {
   "files": {
-    "main.js": "/Gmail-App-React/static/js/main.2ca29317.chunk.js",
-    "main.js.map": "/Gmail-App-React/static/js/main.2ca29317.chunk.js.map",
+    "main.css": "/Gmail-App-React/static/css/main.8f1ebb6a.chunk.css",
+    "main.js": "/Gmail-App-React/static/js/main.d00a3434.chunk.js",
+    "main.js.map": "/Gmail-App-React/static/js/main.d00a3434.chunk.js.map",
     "runtime-main.js": "/Gmail-App-React/static/js/runtime-main.6cfcd36b.js",
     "runtime-main.js.map": "/Gmail-App-React/static/js/runtime-main.6cfcd36b.js.map",
-    "static/js/2.d4737707.chunk.js": "/Gmail-App-React/static/js/2.d4737707.chunk.js",
-    "static/js/2.d4737707.chunk.js.map": "/Gmail-App-React/static/js/2.d4737707.chunk.js.map",
+    "static/js/2.e81ee9bf.chunk.js": "/Gmail-App-React/static/js/2.e81ee9bf.chunk.js",
+    "static/js/2.e81ee9bf.chunk.js.map": "/Gmail-App-React/static/js/2.e81ee9bf.chunk.js.map",
     "index.html": "/Gmail-App-React/index.html",
-    "precache-manifest.b1bf3935a16261e9ba5597130457c58d.js": "/Gmail-App-React/precache-manifest.b1bf3935a16261e9ba5597130457c58d.js",
+    "precache-manifest.95f9337226a0845cb624e1828b00ea22.js": "/Gmail-App-React/precache-manifest.95f9337226a0845cb624e1828b00ea22.js",
     "service-worker.js": "/Gmail-App-React/service-worker.js",
-    "static/js/2.d4737707.chunk.js.LICENSE.txt": "/Gmail-App-React/static/js/2.d4737707.chunk.js.LICENSE.txt"
+    "static/css/main.8f1ebb6a.chunk.css.map": "/Gmail-App-React/static/css/main.8f1ebb6a.chunk.css.map",
+    "static/js/2.e81ee9bf.chunk.js.LICENSE.txt": "/Gmail-App-React/static/js/2.e81ee9bf.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6cfcd36b.js",
-    "static/js/2.d4737707.chunk.js",
-    "static/js/main.2ca29317.chunk.js"
+    "static/js/2.e81ee9bf.chunk.js",
+    "static/css/main.8f1ebb6a.chunk.css",
+    "static/js/main.d00a3434.chunk.js"
   ]
 }

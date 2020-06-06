@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Gmail-App-React/precache-manifest.b1bf3935a16261e9ba5597130457c58d.js"
+  "/Gmail-App-React/precache-manifest.95f9337226a0845cb624e1828b00ea22.js"
 );
 
 self.addEventListener('message', (event) => {
