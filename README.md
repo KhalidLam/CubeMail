@@ -22,4 +22,5 @@ The account sign-in and authentication process is **totally managed by Gmail's s
 ### Features:
 - Read, Send, Reply, Forward, Archive, Move to Trash.
 
-LICENSE: [MIT License](https://opensource.org/licenses/MIT)
+### LICENSE: 
+[MIT License](https://opensource.org/licenses/MIT)
