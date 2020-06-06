@@ -19,11 +19,11 @@ export class App extends Component {
     window.gapi.load("client:auth2", {
       callback: () => {
         // Handle gapi.client initialization.
-        window.gapi.client.setApiKey(Api.apiKey);
+        window.gapi.client.setApiKey(Api.API_KEY);
         window.gapi.auth.authorize(
           {
-            client_id: Api.clientId,
-            scope: Api.scopes,
+            client_id: Api.CLIENT_ID,
+            scope: Api.SCOPES,
             immediate: true,
           },
           this.handleAuthResult
@@ -65,8 +65,8 @@ export class App extends Component {
   handleAuthClick = () => {
     return window.gapi.auth.authorize(
       {
-        client_id: Api.clientId,
-        scope: Api.scopes,
+        client_id: Api.CLIENT_ID,
+        scope: Api.SCOPES,
         immediate: false,
       },
       this.handleAuthResult

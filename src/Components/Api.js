@@ -1,8 +1,7 @@
 export const Api = {
-  clientId:
-    "xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
-  apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  scopes: "https://mail.google.com/",
+  CLIENT_ID: "<YOUR_CLIENT_ID>",
+  API_KEY: "<YOUR_API_KEY>",
+  SCOPES: "https://mail.google.com/",
 };
 
 // https://www.googleapis.com/auth/gmail.readonly =>  Read all resources
