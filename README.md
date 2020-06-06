@@ -1,4 +1,5 @@
 # Working with the Gmail JavaScript API
+[![Build Status](https://img.shields.io/github/license/KhalidLam/Gmail-App-React)](https://github.com/KhalidLam/Gmail-App-React/blob/master/LICENSE)
 
 A simple Gmail client made with [Create-React-App](https://github.com/facebook/create-react-app) and [Chakra UI](https://github.com/chakra-ui/chakra-ui/) using [Gmail's public Javascript API](https://developers.google.com/gmail/api/).
 
