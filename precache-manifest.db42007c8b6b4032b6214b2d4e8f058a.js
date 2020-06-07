@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "52d5228871a5f1dff5156ec3d87c203e",
+    "revision": "107478257fad2a8761014dccd4661462",
     "url": "/Gmail-App-React/index.html"
   },
   {
-    "revision": "3272c92a84e86eb9e69b",
+    "revision": "a84cbc866bbeb7f16535",
     "url": "/Gmail-App-React/static/css/main.8f1ebb6a.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Gmail-App-React/static/js/2.e81ee9bf.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3272c92a84e86eb9e69b",
-    "url": "/Gmail-App-React/static/js/main.d00a3434.chunk.js"
+    "revision": "a84cbc866bbeb7f16535",
+    "url": "/Gmail-App-React/static/js/main.c59cc4e5.chunk.js"
   },
   {
     "revision": "76835062fc9640bcac6b",
