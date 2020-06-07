@@ -1,7 +1,7 @@
 import React from "react";
 import ReplyModel from "./ReplyModel";
 import ForwardModel from "./ForwardModel";
-import { getHeader, isEmpty, removeQuote } from "../Helper";
+import { getHeader, isEmpty, removeQuote, formatDate } from "../Helper";
 import { MdArchive } from "react-icons/md";
 import { Base64 } from "js-base64";
 import {
@@ -184,7 +184,7 @@ const Message = ({ message }) => {
                   {getHeader(headers, "From")}
                 </Text>
                 <Text fontSize='sm' color='gray.500'>
-                  {getHeader(headers, "Date")}
+                  {formatDate(getHeader(headers, "Date"))}
                 </Text>
               </Box>
             </Flex>

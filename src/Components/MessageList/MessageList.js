@@ -9,12 +9,10 @@ import {
   Icon,
   Avatar,
   Text,
-  Spinner,
   Skeleton,
 } from "@chakra-ui/core";
 
 const Messages = ({ handleMessageClick, messagesRow }) => {
-
   let displaySkeleton = () => {
     return [1, 2, 3, 4, 5].map((i) => (
       <Flex

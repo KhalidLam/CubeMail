@@ -19,3 +19,13 @@ export const decodeHtml = (html) => {
 export const removeQuote = (str) => {
   return str.replace(/['"]+/g, "");
 };
+
+export const formatDate = (strDate) => {
+  const date = new Date(strDate);
+  const options = {
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric',
+    hour12: true
+  };
+  return new Intl.DateTimeFormat('en-US', options).format(date)
+}
