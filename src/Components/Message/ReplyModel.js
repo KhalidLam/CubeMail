@@ -40,6 +40,8 @@ const ReplyModel = ({ replayData }) => {
       message,
       handleReplayResponse
     );
+
+    onClose();
   };
 
   let sendMessage = (headers_obj, message, callback) => {
@@ -92,7 +94,12 @@ const ReplyModel = ({ replayData }) => {
         >
           Replay
         </Button>
-        <Modal isOpen={isOpen} size='xl' onClose={onClose}>
+        <Modal
+          isOpen={isOpen}
+          size='xl'
+          onClose={onClose}
+          closeOnOverlayClick={false}
+        >
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Replay </ModalHeader>

@@ -18,7 +18,6 @@ import {
 import { BsPlusCircle } from "react-icons/bs";
 
 const SendModel = () => {
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -29,7 +28,6 @@ const SendModel = () => {
     const subject = form.elements["subject"].value;
     const message = form.elements["message"].value;
 
-
     // Send Simple Mail
     sendMessage(
       {
@@ -39,6 +37,8 @@ const SendModel = () => {
       message,
       handleSendResponse
     );
+
+    onClose();
   };
 
   let sendMessage = (headers_obj, message, callback) => {
@@ -94,7 +94,12 @@ const SendModel = () => {
       >
         Compose mail
       </Button>
-      <Modal isOpen={isOpen} size='xl' onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        size='xl'
+        onClose={onClose}
+        closeOnOverlayClick={false}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>New Message</ModalHeader>

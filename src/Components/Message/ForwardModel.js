@@ -31,6 +31,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
       forwardData.payload.headers,
       getMessageBody(forwardData.payload)
     );
+    onClose();
   };
 
   let handleForwardMsg = (forwardTo, headers, body) => {
@@ -98,7 +99,12 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
           Forward
         </Button>
 
-        <Modal isOpen={isOpen} size='xl' onClose={onClose}>
+        <Modal
+          isOpen={isOpen}
+          size='xl'
+          onClose={onClose}
+          closeOnOverlayClick={false}
+        >
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Forward </ModalHeader>
