@@ -1,4 +1,5 @@
 import React from "react";
+import CustomSkeleton from "./CustomSkeleton";
 import { getHeader, isEmpty, decodeHtml, removeQuote } from "../Helper";
 import {
   Flex,
@@ -9,32 +10,9 @@ import {
   Icon,
   Avatar,
   Text,
-  Skeleton,
 } from "@chakra-ui/core";
 
 const Messages = ({ handleMessageClick, messagesRow }) => {
-  let displaySkeleton = () => {
-    return [1, 2, 3, 4, 5].map((i) => (
-      <Flex
-        key={i}
-        justify='space-around'
-        py={2}
-        borderTop='1px'
-        borderBottom='1px'
-        borderColor='gray.200'
-      >
-        <Box>
-          <Skeleton width='48px' height='48px' borderRadius='50%' />
-        </Box>
-        <Box w='70%'>
-          <Skeleton height='20px' mb='10px' />
-          <Skeleton height='20px' mb='10px' />
-          <Skeleton height='30px' mb='10px' />
-        </Box>
-      </Flex>
-    ));
-  };
-
   if (!isEmpty(messagesRow)) {
     return (
       <React.Fragment>
@@ -140,12 +118,16 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
           </Box>
 
           {/* Message List */}
-
           {/* Display Skeleton */}
-          {displaySkeleton()}
+          <CustomSkeleton />
+          <CustomSkeleton />
+          <CustomSkeleton />
+          <CustomSkeleton />
+          <CustomSkeleton />
 
           {/* Display Spinner */}
-          {/* <Box mt={6} display='flex' align='center' justifyContent='center'>
+          {/*
+          <Box mt={6} display='flex' align='center' justifyContent='center'>
             <Spinner
               thickness='4px'
               speed='0.65s'
@@ -153,7 +135,8 @@ const Messages = ({ handleMessageClick, messagesRow }) => {
               color='blue.500'
               size='xl'
             />
-          </Box> */}
+          </Box>
+          */}
         </Flex>
       </React.Fragment>
     );
