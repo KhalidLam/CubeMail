@@ -82,6 +82,7 @@ export class App extends Component {
       }
     );
   };
+  
   // ----------- REQUEST ------------
   getMessages = (labelIds = "INBOX") => {
     return window.gapi.client.gmail.users.messages
