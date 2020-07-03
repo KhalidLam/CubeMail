@@ -13,7 +13,8 @@ import {
   Spinner,
 } from "@chakra-ui/core";
 
-const Messages = ({ getOneMessage, messagesRow }) => {
+const Messages = ({ getOneMessage, messages }) => {
+
   const handleMessageClick = (e) => {
     const messageId = e.currentTarget.getAttribute("id");
     getOneMessage(messageId);
@@ -45,7 +46,7 @@ const Messages = ({ getOneMessage, messagesRow }) => {
       </Box>
 
       {/* Message List */}
-      {isEmpty(messagesRow) ? (
+      {isEmpty(messages) ? (
         <Box mt={6} display='flex' align='center' justifyContent='center'>
           <Spinner
             thickness='4px'
@@ -57,7 +58,7 @@ const Messages = ({ getOneMessage, messagesRow }) => {
         </Box>
       ) : (
         <Box overflowY='auto'>
-          {messagesRow.map((message) => {
+          {messages.map((message) => {
             const name = removeQuote(
               getHeader(message.payload.headers, "From").split("<")[0]
             );
@@ -110,5 +111,5 @@ export default Messages;
 
 Messages.prototype = {
   getOneMessage: PropTypes.func.isRequired,
-  messagesRow: PropTypes.array.isRequired,
+  messages: PropTypes.array.isRequired,
 };

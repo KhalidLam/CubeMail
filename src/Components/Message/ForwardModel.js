@@ -90,7 +90,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     <Fragment>
       <Button
         rightIcon={MdArrowForward}
-        variantColor='teal'
+        variantColor='blue'
         variant='outline'
         onClick={onOpen}
       >

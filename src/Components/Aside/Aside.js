@@ -16,8 +16,10 @@ const Aside = ({ getMessages }) => {
     <Box
       w='16%'
       h='100%'
-      bg='#00043c'
-      color='white'
+      bg='white'
+      border='1px'
+      borderColor='gray.200'
+      // color='white'
       borderTopLeftRadius='md'
       borderBottomLeftRadius='md'
     >
@@ -31,7 +33,9 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='INBOX'
-            className='activeBtn'
+            // className='activeBtn'
+            variantColor='blue'
+            variant='solid'
             w='100%'
             h='45px'
             py={2}
@@ -46,7 +50,9 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='STARRED'
-            className='labelBtn'
+            // className='labelBtn'
+            variantColor='blue'
+            variant='ghost'
             w='100%'
             h='45px'
             py={2}
@@ -61,7 +67,7 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='IMPORTANT'
-            className='labelBtn'
+            // className='labelBtn'
             w='100%'
             h='45px'
             py={2}
@@ -78,7 +84,7 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='SENT'
-            className='labelBtn'
+            // className='labelBtn'
             w='100%'
             h='45px'
             py={2}

@@ -10,7 +10,7 @@ import "./App.css";
 
 const App = () => {
   // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
-  const [messagesRow, setMessagesRow] = useState([]);
+  const [messages, setmessages] = useState([]);
   const [message, setMessage] = useState({});
 
   useEffect(() => {
@@ -83,52 +83,41 @@ const App = () => {
     );
   };
 
-  // ----------- REQUEST ------------
+  // ----------- Functions to Get Data from Gmail Api ------------
   const getMessages = (labelIds = "INBOX") => {
-    return window.gapi.client.gmail.users.messages
-      .list({
-        userId: "me",
-        labelIds: labelIds,
-        maxResults: 20,
-      })
-      .then(
-        (response) => {
-          // Handle the results here (response.result has the parsed body).
-          const messages = response.result.messages
-            ? response.result.messages
-            : [];
+    // Get List of 20 message's Id
+    const request = window.gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: labelIds,
+      maxResults: 20,
+    });
 
-          setMessagesRow([]);
-
-          // Create & send request for each message id from messages List
-          getMessagesRow(messages);
-        },
-        (err) => {
-          console.error("getMessages error", err);
-        }
-      );
+    // Send Id list to getMessagesData to get Message Data foreach Id
+    request.execute(getMessagesData);
   };
 
-  const getMessagesRow = (messages) => {
-    messages.map((message) => {
-      return window.gapi.client.gmail.users.messages
+  const getMessagesData = (response) => {
+    const messages = response.result.messages ? response.result.messages : [];
+
+    messages.forEach((message) => {
+      window.gapi.client.gmail.users.messages
         .get({
           userId: "me",
           id: message.id,
         })
         .then(
           (response) => {
-            setMessagesRow((messagesRow) => [...messagesRow, response.result]);
+            setmessages((messages) => [...messages, response.result]);
           },
           (err) => {
-            console.error("getMessagesRow error", err);
+            console.error("getMessagesData error", err);
           }
         );
     });
   };
 
   const getOneMessage = (messageId) => {
-    return window.gapi.client.gmail.users.messages
+    window.gapi.client.gmail.users.messages
       .get({
         userId: "me",
         id: messageId,
@@ -167,10 +156,7 @@ const App = () => {
           color='white'
         >
           <Aside getMessages={getMessages} />
-          <MessageList
-            getOneMessage={getOneMessage}
-            messagesRow={messagesRow}
-          />
+          <MessageList getOneMessage={getOneMessage} messages={messages} />
           <Message message={message} />
         </Flex>
       </ThemeProvider>

@@ -59,6 +59,7 @@ const ReplyModel = ({ replayData }) => {
         raw: base64EncodedEmail,
       },
     });
+
     request.execute(callback);
   };
 
@@ -85,7 +86,7 @@ const ReplyModel = ({ replayData }) => {
     <Fragment>
       <Button
         rightIcon={MdReplay}
-        variantColor='teal'
+        variantColor='blue'
         variant='outline'
         onClick={onOpen}
       >

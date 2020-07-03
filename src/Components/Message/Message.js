@@ -153,7 +153,7 @@ const Message = ({ message }) => {
             />
             <Button
               rightIcon={MdArchive}
-              variantColor='teal'
+              variantColor='blue'
               variant='outline'
               onClick={() => handleArchiveBtn([message.id], ["INBOX"])}
             >
@@ -161,7 +161,7 @@ const Message = ({ message }) => {
             </Button>
             <Button
               rightIcon='delete'
-              variantColor='teal'
+              variantColor='blue'
               variant='outline'
               onClick={() => handleTrashBtn("me", message.id)}
             >

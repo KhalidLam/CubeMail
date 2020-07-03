@@ -85,14 +85,16 @@ const SendModel = () => {
         w='100%'
         h='48px'
         leftIcon={BsPlusCircle}
-        border='1px'
         borderRadius='20px'
-        borderColor='green.500'
-        variantColor='green'
         variant='solid'
+        variantColor='blue'
+        // border='1px'
+        // borderColor='green.500'
+        // variantColor='green'
+        // variant='outline'
         onClick={onOpen}
       >
-        Compose mail
+        New Message
       </Button>
       <Modal
         isOpen={isOpen}
