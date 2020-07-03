@@ -31,7 +31,9 @@ The account sign-in and authentication process is **totally managed by Gmail's s
 ## Technologies used
 
 - [React](https://github.com/facebook/react) - build interfaces & data flow
-- [Chakra UI](https://github.com/chakra-ui/chakra-ui/) - styling
+- [Chakra UI](https://github.com/chakra-ui/chakra-ui/) - components & styling
+- [React Icons](https://github.com/react-icons/react-icons) - Icons
+- [js-base64](https://github.com/dankogai/js-base64) - Base64 transcoder
 - [Gmail's public Javascript API](https://github.com/google/google-api-javascript-client) - access to Google APIs
 - [Gmail REST API](https://developers.google.com/gmail/api) - Documentation
 
