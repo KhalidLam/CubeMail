@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SendModel from "./SendModel";
 import { Button, Box, List, ListItem } from "@chakra-ui/core";
 import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
@@ -6,8 +6,12 @@ import { FiSend, FiFile } from "react-icons/fi";
 import PropTypes from "prop-types";
 
 const Aside = ({ getMessages }) => {
+  const [active, setActive] = useState("INBOX");
+
   const handleClick = (e) => {
     const categoryId = e.target.id;
+    setActive(categoryId);
+
     // Get Messages using clicked category
     getMessages(categoryId);
   };
@@ -32,13 +36,13 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='INBOX'
-            variantColor='blue'
-            variant='solid'
             w='100%'
             h='45px'
             py={2}
             pl={8}
             leftIcon={MdInbox}
+            variantColor='blue'
+            variant={active === "INBOX" ? "solid" : "ghost"}
             justifyContent='flex-start'
             onClick={handleClick}
           >
@@ -48,13 +52,13 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='STARRED'
-            variantColor='blue'
-            variant='ghost'
             w='100%'
             h='45px'
             py={2}
             pl={8}
             leftIcon={MdStar}
+            variantColor='blue'
+            variant={active === "STARRED" ? "solid" : "ghost"}
             justifyContent='flex-start'
             onClick={handleClick}
           >
@@ -69,9 +73,9 @@ const Aside = ({ getMessages }) => {
             py={2}
             pl={8}
             leftIcon={MdLabel}
-            justifyContent='flex-start'
             variantColor='blue'
-            variant='ghost'
+            variant={active === "IMPORTANT" ? "solid" : "ghost"}
+            justifyContent='flex-start'
             onClick={handleClick}
           >
             Important
@@ -85,9 +89,9 @@ const Aside = ({ getMessages }) => {
             py={2}
             pl={8}
             leftIcon={FiSend}
-            justifyContent='flex-start'
             variantColor='blue'
-            variant='ghost'
+            variant={active === "SENT" ? "solid" : "ghost"}
+            justifyContent='flex-start'
             onClick={handleClick}
           >
             Sent
@@ -96,15 +100,14 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='DRAFT'
-            className='labelBtn'
             w='100%'
             h='45px'
             py={2}
             pl={8}
             leftIcon={FiFile}
-            justifyContent='flex-start'
             variantColor='blue'
-            variant='ghost'
+            variant={active === "DRAFT" ? "solid" : "ghost"}
+            justifyContent='flex-start'
             onClick={handleClick}
           >
             Drafts
@@ -113,15 +116,14 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='TRASH'
-            className='labelBtn'
             w='100%'
             h='45px'
             py={2}
             pl={8}
             leftIcon='delete'
-            justifyContent='flex-start'
             variantColor='blue'
-            variant='ghost'
+            variant={active === "TRASH" ? "solid" : "ghost"}
+            justifyContent='flxex-start'
             onClick={handleClick}
           >
             Trash
@@ -130,15 +132,14 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='CATEGORY_SOCIAL'
-            className='labelBtn'
             w='100%'
             h='45px'
             py={2}
             pl={8}
             leftIcon={MdPeople}
-            justifyContent='flex-start'
             variantColor='blue'
-            variant='ghost'
+            variant={active === "CATEGORY_SOCIAL" ? "solid" : "ghost"}
+            justifyContent='flxex-start'
             onClick={handleClick}
           >
             Social
@@ -147,15 +148,14 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='CATEGORY_PROMOTIONS'
-            className='labelBtn'
             w='100%'
             h='45px'
             py={2}
             pl={8}
             leftIcon={MdLoyalty}
-            justifyContent='flex-start'
             variantColor='blue'
-            variant='ghost'
+            variant={active === "CATEGORY_PROMOTIONS" ? "solid" : "ghost"}
+            justifyContent='flxex-start'
             onClick={handleClick}
           >
             Promotions
