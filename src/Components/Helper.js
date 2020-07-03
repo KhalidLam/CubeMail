@@ -11,7 +11,7 @@ export const isEmpty = (obj) => {
 };
 
 export const decodeHtml = (html) => {
-  var txt = document.createElement("textarea");
+  let txt = document.createElement("textarea");
   txt.innerHTML = html;
   return txt.value;
 };
@@ -23,9 +23,12 @@ export const removeQuote = (str) => {
 export const formatDate = (strDate) => {
   const date = new Date(strDate);
   const options = {
-    year: 'numeric', month: 'numeric', day: 'numeric',
-    hour: 'numeric', minute: 'numeric',
-    hour12: true
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
   };
-  return new Intl.DateTimeFormat('en-US', options).format(date)
-}
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};

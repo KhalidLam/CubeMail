@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Base64 } from "js-base64";
-import { MdReplay, MdArrowForward } from "react-icons/md";
-import { getHeader, isEmpty } from "../Helper";
+import { MdArrowForward } from "react-icons/md";
+import { getHeader } from "../Helper";
+import PropTypes from "prop-types";
 import {
   Button,
   Modal,
@@ -22,7 +23,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const forwardTo = form.elements["emailTo"].value;
@@ -34,8 +35,8 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     onClose();
   };
 
-  let handleForwardMsg = (forwardTo, headers, body) => {
-    var email = "";
+  const handleForwardMsg = (forwardTo, headers, body) => {
+    let email = "";
     email += `From: ${getHeader(headers, "From")} \r\n`;
     email += `Date: ${getHeader(headers, "Date")} \r\n`;
     email += `Subject: ${getHeader(headers, "Subject")} \r\n`;
@@ -43,12 +44,12 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     email += `Content-Type: text/html; charset=UTF-8 \r\n`;
     email += `\r\n ${body}`;
 
-    sendMessage("me", email, handleForwardResponse);
+    sendMessage("me", email, displayToast);
   };
 
-  let sendMessage = (userId, email, callback) => {
-    var base64EncodedEmail = Base64.encodeURI(email);
-    var request = window.gapi.client.gmail.users.messages.send({
+  const sendMessage = (userId, email, callback) => {
+    const base64EncodedEmail = Base64.encodeURI(email);
+    const request = window.gapi.client.gmail.users.messages.send({
       userId: userId,
       resource: {
         raw: base64EncodedEmail,
@@ -57,16 +58,14 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     request.execute(callback);
   };
 
-  let handleForwardResponse = (res) => {
-    if (res.result) {
-      if (res.result.labelIds.indexOf("SENT") !== -1) {
-        toast({
-          title: "Email forwarded Successfully.",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
+  const displayToast = ({ result }) => {
+    if (result.labelIds.indexOf("SENT") !== -1) {
+      toast({
+        title: "Email forwarded Successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } else {
       toast({
         title: "An error occurred.",
@@ -78,8 +77,8 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     }
   };
 
-  let getForwardHead = (headers) => {
-    var msg = "";
+  const getForwardHead = (headers) => {
+    let msg = "";
     msg += "From: " + getHeader(headers, "From") + "\r\n";
     msg += "Date: " + getHeader(headers, "Date") + "\r\n";
     msg += "Subject: " + getHeader(headers, "Subject") + "\r\n";
@@ -87,90 +86,80 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
     return msg;
   };
 
-  if (!isEmpty(forwardData)) {
-    return (
-      <React.Fragment>
-        <Button
-          rightIcon={MdArrowForward}
-          variantColor='teal'
-          variant='outline'
-          onClick={onOpen}
-        >
-          Forward
-        </Button>
+  return (
+    <Fragment>
+      <Button
+        rightIcon={MdArrowForward}
+        variantColor='teal'
+        variant='outline'
+        onClick={onOpen}
+      >
+        Forward
+      </Button>
 
-        <Modal
-          isOpen={isOpen}
-          size='xl'
-          onClose={onClose}
-          closeOnOverlayClick={false}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Forward </ModalHeader>
-            <ModalCloseButton />
-            <form id='form' onSubmit={handleSubmit}>
-              <ModalBody>
-                <FormControl isRequired>
-                  <Input
-                    type='email'
-                    id='emailTo'
-                    placeholder='To'
-                    aria-describedby='email-helper-text'
-                  />
-                </FormControl>
-                <FormControl isRequired>
-                  <Input
-                    type='text'
-                    id='subject'
-                    placeholder='Subject'
-                    aria-describedby='subject-email-helper-text'
-                    value={getHeader(forwardData.payload.headers, "Subject")}
-                    readOnly
-                  />
-                </FormControl>
-                <FormControl isRequired>
-                  <Textarea
-                    id='message'
-                    minH='280px'
-                    size='xl'
-                    resize='vertical'
-                    value={
-                      "------Forward Message------\r\n" +
-                      getForwardHead(forwardData.payload.headers)
-                    }
-                    readOnly
-                  />
-                </FormControl>
-              </ModalBody>
+      <Modal
+        isOpen={isOpen}
+        size='xl'
+        onClose={onClose}
+        closeOnOverlayClick={false}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Forward </ModalHeader>
+          <ModalCloseButton />
+          <form id='form' onSubmit={handleSubmit}>
+            <ModalBody>
+              <FormControl isRequired>
+                <Input
+                  type='email'
+                  id='emailTo'
+                  placeholder='To'
+                  aria-describedby='email-helper-text'
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <Input
+                  type='text'
+                  id='subject'
+                  placeholder='Subject'
+                  aria-describedby='subject-email-helper-text'
+                  value={getHeader(forwardData.payload.headers, "Subject")}
+                  readOnly
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <Textarea
+                  id='message'
+                  minH='280px'
+                  size='xl'
+                  resize='vertical'
+                  value={
+                    "------Forward Message------\r\n" +
+                    getForwardHead(forwardData.payload.headers)
+                  }
+                  readOnly
+                />
+              </FormControl>
+            </ModalBody>
 
-              <ModalFooter>
-                <Button
-                  type='reset'
-                  variantColor='blue'
-                  mr={3}
-                  onClick={onClose}
-                >
-                  Close
-                </Button>
-                <Button type='submit' variantColor='green'>
-                  Send
-                </Button>
-              </ModalFooter>
-            </form>
-          </ModalContent>
-        </Modal>
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <Button rightIcon={MdReplay} variantColor='teal' variant='outline'>
-          Replay
-        </Button>
-      </React.Fragment>
-    );
-  }
+            <ModalFooter>
+              <Button type='reset' variantColor='blue' mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button type='submit' variantColor='green'>
+                Send
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
+    </Fragment>
+  );
 };
 
 export default ForwardModel;
+
+ForwardModel.prototype = {
+  forwardData: PropTypes.object.isRequired,
+  getMessageBody: PropTypes.func.isRequired,
+};

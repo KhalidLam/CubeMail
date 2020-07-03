@@ -1,20 +1,19 @@
-import React, { Component } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+
 import Aside from "./Components/Aside/Aside";
 import MessageList from "./Components/MessageList/MessageList";
 import Message from "./Components/Message/Message";
+
 import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messages: [],
-      messagesRow: [],
-      message: {},
-    };
-  }
+import "./App.css";
 
-  componentDidMount() {
+const App = () => {
+  // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
+  const [messagesRow, setMessagesRow] = useState([]);
+  const [message, setMessage] = useState({});
+
+  useEffect(() => {
     window.gapi.load("client:auth2", {
       callback: () => {
         // Handle gapi.client initialization.
@@ -25,66 +24,67 @@ export class App extends Component {
             scope: process.env.REACT_APP_SCOPES,
             immediate: true,
           },
-          this.handleAuthResult
+          handleAuthResult
         );
       },
       onerror: function () {
         // Handle loading error.
-        alert("gapi.client failed to load!");
+        console.log("gapi.client failed to load!");
       },
       timeout: 5000, // 5 seconds.
       ontimeout: function () {
         // Handle timeout.
-        alert("gapi.client could not load in a timely manner!");
+        console.log("gapi.client could not load in a timely manner!");
       },
     });
-  }
+    // eslint-disable-next-line
+  }, []);
 
-  handleAuthResult = (authResult) => {
+  const handleAuthResult = (authResult) => {
     if (authResult && !authResult.error) {
       console.log("Sign-in successful");
-      this.hideAuthBtn();
-      this.loadClient();
+      hideAuthBtn();
+      loadClient();
     } else {
       console.error("handleAuthResult...");
       console.error(authResult);
-      this.displayAuthBtn();
+      displayAuthBtn();
     }
   };
 
-  hideAuthBtn = () => {
+  const hideAuthBtn = () => {
     document.getElementById("authBtn").style.display = "none";
   };
 
-  displayAuthBtn = () => {
+  const displayAuthBtn = () => {
     document.getElementById("authBtn").style.display = "block";
   };
 
-  handleAuthClick = () => {
+  const handleAuthClick = () => {
     return window.gapi.auth.authorize(
       {
         client_id: process.env.REACT_APP_CLIENT_ID,
         scope: process.env.REACT_APP_SCOPES,
         immediate: false,
       },
-      this.handleAuthResult
+      handleAuthResult
     );
   };
 
-  loadClient = () => {
+  const loadClient = () => {
     return window.gapi.client.load("gmail", "v1").then(
       (res) => {
         console.log("gapi client loaded for API");
-        this.getMessages();
+        getMessages();
       },
       (err) => {
         console.error("Error loading window.gapi client for API", err);
       }
     );
   };
-  
+
   // ----------- REQUEST ------------
-  getMessages = (labelIds = "INBOX") => {
+  const getMessages = (labelIds = "INBOX") => {
     return window.gapi.client.gmail.users.messages
       .list({
         userId: "me",
@@ -94,17 +94,14 @@ export class App extends Component {
       .then(
         (response) => {
           // Handle the results here (response.result has the parsed body).
-
           const messages = response.result.messages
             ? response.result.messages
             : [];
-          this.setState({
-            messages: messages,
-            messagesRow: [],
-          });
+
+          setMessagesRow([]);
 
           // Create & send request for each message id from messages List
-          this.getMessagesRow(messages);
+          getMessagesRow(messages);
         },
         (err) => {
           console.error("getMessages error", err);
@@ -112,7 +109,7 @@ export class App extends Component {
       );
   };
 
-  getMessagesRow = (messages) => {
+  const getMessagesRow = (messages) => {
     messages.map((message) => {
       return window.gapi.client.gmail.users.messages
         .get({
@@ -121,9 +118,7 @@ export class App extends Component {
         })
         .then(
           (response) => {
-            this.setState((state) => ({
-              messagesRow: [...state.messagesRow, response.result],
-            }));
+            setMessagesRow((messagesRow) => [...messagesRow, response.result]);
           },
           (err) => {
             console.error("getMessagesRow error", err);
@@ -132,7 +127,7 @@ export class App extends Component {
     });
   };
 
-  getOneMessage = (messageId) => {
+  const getOneMessage = (messageId) => {
     return window.gapi.client.gmail.users.messages
       .get({
         userId: "me",
@@ -140,9 +135,7 @@ export class App extends Component {
       })
       .then(
         (response) => {
-          this.setState({
-            message: response.result,
-          });
+          setMessage(response.result);
         },
         (err) => {
           console.error("getMessage error", err);
@@ -150,57 +143,39 @@ export class App extends Component {
       );
   };
 
-  handleMessageClick = (e) => {
-    const messageId = e.currentTarget.getAttribute("id");
-    this.getOneMessage(messageId);
-  };
+  return (
+    <Fragment>
+      <ThemeProvider>
+        <CSSReset />
+        <Button
+          id='authBtn'
+          display='none'
+          variantColor='teal'
+          variant='outline'
+          onClick={handleAuthClick}
+        >
+          Authorize
+        </Button>
 
-  getMessagesByCategory = (e) => {
-    const btn = e.target;
-    const categoryId = btn.id;
-    // Todo -> Change Style
-
-    // Get Messages using clicked category
-    this.getMessages([categoryId]);
-  };
-
-  render() {
-    const { message, messagesRow } = this.state;
-
-    return (
-      <React.Fragment>
-        <ThemeProvider>
-          <CSSReset />
-          <Button
-            id='authBtn'
-            display='none'
-            variantColor='teal'
-            variant='outline'
-            onClick={this.handleAuthClick}
-          >
-            Authorize
-          </Button>
-
-          <Flex
-            h='100vh'
-            minH='600px'
-            justify='space-arround'
-            wrap='no-wrap'
-            p='1em'
-            bg='#e5f4f1'
-            color='white'
-          >
-            <Aside getMessagesByCategory={this.getMessagesByCategory} />
-            <MessageList
-              handleMessageClick={this.handleMessageClick}
-              messagesRow={messagesRow}
-            />
-            <Message message={message} />
-          </Flex>
-        </ThemeProvider>
-      </React.Fragment>
-    );
-  }
-}
+        <Flex
+          h='100vh'
+          minH='600px'
+          justify='space-arround'
+          wrap='no-wrap'
+          p='1em'
+          bg='#e5f4f1'
+          color='white'
+        >
+          <Aside getMessages={getMessages} />
+          <MessageList
+            getOneMessage={getOneMessage}
+            messagesRow={messagesRow}
+          />
+          <Message message={message} />
+        </Flex>
+      </ThemeProvider>
+    </Fragment>
+  );
+};
 
 export default App;

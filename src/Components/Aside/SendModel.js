@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Base64 } from "js-base64";
+import { BsPlusCircle } from "react-icons/bs";
 import {
   Button,
   Modal,
@@ -15,42 +16,41 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/core";
-import { BsPlusCircle } from "react-icons/bs";
 
 const SendModel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const emailTo = form.elements["emailTo"].value;
     const subject = form.elements["subject"].value;
     const message = form.elements["message"].value;
 
-    // Send Simple Mail
+    // Send Simple Mail && Display Toast
     sendMessage(
       {
         To: emailTo,
         Subject: subject,
       },
       message,
-      handleSendResponse
+      displayToast
     );
 
     onClose();
   };
 
-  let sendMessage = (headers_obj, message, callback) => {
-    var email = "";
+  const sendMessage = (headers_obj, message, callback) => {
+    let email = "";
 
     for (var header in headers_obj)
       email += header += ": " + headers_obj[header] + "\r\n";
 
     email += "\r\n" + message;
 
-    var base64EncodedEmail = Base64.encodeURI(email);
-    var request = window.gapi.client.gmail.users.messages.send({
+    const base64EncodedEmail = Base64.encodeURI(email);
+    const request = window.gapi.client.gmail.users.messages.send({
       userId: "me",
       resource: {
         raw: base64EncodedEmail,
@@ -59,8 +59,8 @@ const SendModel = () => {
     request.execute(callback);
   };
 
-  let handleSendResponse = (res) => {
-    if (res.result.labelIds.indexOf("SENT") !== -1) {
+  const displayToast = ({ result }) => {
+    if (result.labelIds.indexOf("SENT") !== -1) {
       toast({
         title: "Message Sent.",
         description: "We've Sent your email.",
@@ -80,7 +80,7 @@ const SendModel = () => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Button
         w='100%'
         h='48px'
@@ -143,7 +143,7 @@ const SendModel = () => {
           </form>
         </ModalContent>
       </Modal>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
