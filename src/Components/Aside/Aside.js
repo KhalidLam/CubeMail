@@ -19,7 +19,6 @@ const Aside = ({ getMessages }) => {
       bg='white'
       border='1px'
       borderColor='gray.200'
-      // color='white'
       borderTopLeftRadius='md'
       borderBottomLeftRadius='md'
     >
@@ -33,7 +32,6 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='INBOX'
-            // className='activeBtn'
             variantColor='blue'
             variant='solid'
             w='100%'
@@ -50,7 +48,6 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='STARRED'
-            // className='labelBtn'
             variantColor='blue'
             variant='ghost'
             w='100%'
@@ -67,7 +64,6 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='IMPORTANT'
-            // className='labelBtn'
             w='100%'
             h='45px'
             py={2}
@@ -84,7 +80,6 @@ const Aside = ({ getMessages }) => {
         <ListItem>
           <Button
             id='SENT'
-            // className='labelBtn'
             w='100%'
             h='45px'
             py={2}

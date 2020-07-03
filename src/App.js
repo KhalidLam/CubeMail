@@ -6,11 +6,9 @@ import Message from "./Components/Message/Message";
 
 import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 
-import "./App.css";
-
 const App = () => {
   // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
-  const [messages, setmessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState({});
 
   useEffect(() => {
@@ -92,6 +90,8 @@ const App = () => {
       maxResults: 20,
     });
 
+    setMessages([]);
+
     // Send Id list to getMessagesData to get Message Data foreach Id
     request.execute(getMessagesData);
   };
@@ -107,7 +107,7 @@ const App = () => {
         })
         .then(
           (response) => {
-            setmessages((messages) => [...messages, response.result]);
+            setMessages((messages) => [...messages, response.result]);
           },
           (err) => {
             console.error("getMessagesData error", err);
