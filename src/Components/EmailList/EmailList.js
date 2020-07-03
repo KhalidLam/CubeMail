@@ -13,8 +13,7 @@ import {
   Spinner,
 } from "@chakra-ui/core";
 
-const Messages = ({ getOneMessage, messages }) => {
-
+const EmailList = ({ getOneMessage, messages }) => {
   const handleMessageClick = (e) => {
     const messageId = e.currentTarget.getAttribute("id");
     getOneMessage(messageId);
@@ -107,9 +106,9 @@ const Messages = ({ getOneMessage, messages }) => {
   );
 };
 
-export default Messages;
+export default EmailList;
 
-Messages.prototype = {
+EmailList.prototype = {
   getOneMessage: PropTypes.func.isRequired,
   messages: PropTypes.array.isRequired,
 };

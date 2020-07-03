@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import Aside from "./Components/Aside/Aside";
-import MessageList from "./Components/MessageList/MessageList";
-import Message from "./Components/Message/Message";
+import MailboxList from "./Components/MailboxList/MailboxList";
+import EmailList from "./Components/EmailList/EmailList";
+import Email from "./Components/Email/Email";
 
 import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 
@@ -155,9 +155,9 @@ const App = () => {
           bg='#e5f4f1'
           color='white'
         >
-          <Aside getMessages={getMessages} />
-          <MessageList getOneMessage={getOneMessage} messages={messages} />
-          <Message message={message} />
+          <MailboxList getMessages={getMessages} />
+          <EmailList getOneMessage={getOneMessage} messages={messages} />
+          <Email message={message} />
         </Flex>
       </ThemeProvider>
     </Fragment>

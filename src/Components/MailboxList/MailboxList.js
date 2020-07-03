@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import SendModel from "./SendModel";
+import PropTypes from "prop-types";
 import { Button, Box, List, ListItem } from "@chakra-ui/core";
 import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
 import { FiSend, FiFile } from "react-icons/fi";
-import PropTypes from "prop-types";
 
-const Aside = ({ getMessages }) => {
+const MailboxList = ({ getMessages }) => {
   const [active, setActive] = useState("INBOX");
 
   const handleClick = (e) => {
@@ -166,8 +166,8 @@ const Aside = ({ getMessages }) => {
   );
 };
 
-Aside.prototype = {
+MailboxList.prototype = {
   getMessages: PropTypes.func.isRequired,
 };
 
-export default Aside;
+export default MailboxList;

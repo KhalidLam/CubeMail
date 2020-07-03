@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/core";
 
-const Message = ({ message }) => {
+const Email = ({ message }) => {
   const headers = isEmpty(message) ? [] : message.payload.headers;
   const toast = useToast();
 
@@ -214,8 +214,8 @@ const Message = ({ message }) => {
   );
 };
 
-export default Message;
+export default Email;
 
-Message.prototype = {
+Email.prototype = {
   message: PropTypes.object.isRequired,
 };
