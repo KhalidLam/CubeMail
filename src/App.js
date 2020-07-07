@@ -10,6 +10,7 @@ const App = () => {
   // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState({});
+  const [nextPageToken, setNextPageToken] = useState("");
 
   useEffect(() => {
     window.gapi.load("client:auth2", {
@@ -84,16 +85,64 @@ const App = () => {
   // ----------- Functions to Get Data from Gmail Api ------------
   const getMessages = (labelIds = "INBOX") => {
     // Get List of 20 message's Id
-    const request = window.gapi.client.gmail.users.messages.list({
-      userId: "me",
-      labelIds: labelIds,
-      maxResults: 20,
-    });
+    window.gapi.client.gmail.users.messages
+      .list({
+        userId: "me",
+        labelIds: labelIds,
+        maxResults: 20,
+      })
+      .then((resp) => {
+        // Empty previous messages
+        setMessages([]);
+        console.log(resp.result);
 
-    setMessages([]);
+        // Set NextPageToken
+        setNextPageToken(resp.nextPageToken);
 
-    // Send Id list to getMessagesData to get Message Data foreach Id
-    request.execute(getMessagesData);
+        // Get Next Pages Messages Id
+        getNextPageMessages();
+
+        // Send Id list to getMessagesData to get Message Data foreach Id
+        getMessagesData(resp);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // request.execute(getMessagesData);
+  };
+
+  const getNextPageMessages = () => {
+    // nextPageToken =
+    return window.gapi.client.gmail.users.messages
+      .list({
+        userId: "eclipsegk10@gmail.com",
+        maxResults: 20,
+        pageToken: nextPageToken,
+      })
+      .then((response) => {
+        console.log("Next Page Emails :", response.result);
+        // Send Request for each message Id
+        response.result.messages.forEach((message) => {
+          window.gapi.client.gmail.users.messages
+            .get({
+              userId: "me",
+              id: message.id,
+            })
+            .then(
+              (response) => {
+                // setMessages((messages) => [...messages, response.result]);
+                console.log(response.result);
+              },
+              (err) => {
+                console.error("getMessagesData error", err);
+              }
+            );
+        });
+      })
+      .catch((err) => {
+        console.error("Execute error", err);
+      });
   };
 
   const getMessagesData = (response) => {
