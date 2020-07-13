@@ -45,10 +45,10 @@ The account sign-in and authentication process is **totally managed by Gmail's s
 
 ## Todo
 
-- Make App responsive
-- Add Search Feature
-- Display user's Labels
-- Add Animation on Buttons
+- [ ] Make App responsive
+- [ ] Add Search Feature
+- [ ] Display user's Labels
+- [ ] Add Animation on Buttons
 
 ### License:
 
