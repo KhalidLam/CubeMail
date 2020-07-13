@@ -1,5 +1,7 @@
 # CubeMail [![Build Status](https://img.shields.io/github/license/KhalidLam/Gmail-App-React)](https://github.com/KhalidLam/Gmail-App-React/blob/master/LICENSE)
 
+![alt text](https://github.com/KhalidLam/CubeMail/blob/master/screenshot.jpg?raw=true)
+
 CubeMail is a webmail client built using [Create-React-App](https://github.com/facebook/create-react-app) and [Chakra UI](https://github.com/chakra-ui/chakra-ui/), It runs completely in the browser and uses the [Gmail's public Javascript API](https://developers.google.com/gmail/api/).
 
 Try it out at: https://khalidlam.github.io/CubeMail/
