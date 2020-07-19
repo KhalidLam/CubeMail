@@ -4,12 +4,25 @@ import MailboxList from "./Components/MailboxList/MailboxList";
 import EmailList from "./Components/EmailList/EmailList";
 import Email from "./Components/Email/Email";
 
-import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
+import {
+  ThemeProvider,
+  CSSReset,
+  Button,
+  ButtonGroup,
+  Flex,
+  Grid,
+  Box,
+  IconButton,
+} from "@chakra-ui/core";
+
+import { FcGoogle } from "react-icons/fc";
 
 const App = () => {
   // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState({});
+  const [isAuthorize, setIsAuthorize] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [nextPageToken, setNextPageToken] = useState("");
 
   useEffect(() => {
@@ -42,24 +55,17 @@ const App = () => {
   const handleAuthResult = (authResult) => {
     if (authResult && !authResult.error) {
       console.log("Sign-in successful");
-      hideAuthBtn();
+      setIsAuthorize(true);
       loadClient();
     } else {
       console.error("handleAuthResult...");
       console.error(authResult);
-      displayAuthBtn();
+      setLoading(false);
     }
   };
 
-  const hideAuthBtn = () => {
-    document.getElementById("authBtn").style.display = "none";
-  };
-
-  const displayAuthBtn = () => {
-    document.getElementById("authBtn").style.display = "block";
-  };
-
   const handleAuthClick = () => {
+    setLoading(true);
     return window.gapi.auth.authorize(
       {
         client_id: process.env.REACT_APP_CLIENT_ID,
@@ -185,32 +191,47 @@ const App = () => {
     <Fragment>
       <ThemeProvider>
         <CSSReset />
-        <Button
-          id='authBtn'
-          display='none'
-          variantColor='teal'
-          variant='outline'
-          onClick={handleAuthClick}
-        >
-          Authorize
-        </Button>
-
-        <Flex
-          h='100vh'
-          minH='600px'
-          justify='space-arround'
-          wrap='no-wrap'
-          p='1em'
-          bg='#e5f4f1'
-          color='white'
-        >
-          <MailboxList getMessages={getMessages} />
-          <EmailList getOneMessage={getOneMessage} messages={messages} />
-          <Email message={message} />
-        </Flex>
+        {isAuthorize ? (
+          <Main getMessages={getMessages} getOneMessage={getOneMessage} messages={messages} message={message} />
+        ) : (
+          <SignIn loading={loading} handleAuthClick={handleAuthClick}/>
+        )}
       </ThemeProvider>
     </Fragment>
   );
 };
 
 export default App;
+
+const SignIn = ({handleAuthClick, loading}) => (
+  <Flex h='100vh' justify='center' alignItems='center' bg='#e5f4f1'>
+    <Button
+      isLoading={loading}
+      loadingText='Loading...'
+      leftIcon={FcGoogle}
+      height='50px'
+      variantColor='blue'
+      variant='outline'
+      backgroundColor='white'
+      onClick={handleAuthClick}
+    >
+      Sign in with Google
+    </Button>
+  </Flex>
+);
+
+const Main = ({getMessages, getOneMessage, messages, message}) => (
+  <Flex
+    h='100vh'
+    minH='600px'
+    justify='space-arround'
+    wrap='no-wrap'
+    p='1em'
+    bg='#e5f4f1'
+    color='white'
+  >
+    <MailboxList getMessages={getMessages} />
+    <EmailList getOneMessage={getOneMessage} messages={messages} />
+    <Email message={message} />
+  </Flex>
+)
