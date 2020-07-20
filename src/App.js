@@ -92,13 +92,12 @@ const App = () => {
       .then((resp) => {
         // Empty previous messages
         setMessages([]);
-        console.log(resp.result);
 
         // Set NextPageToken
         setNextPageToken(resp.nextPageToken);
 
         // Get Next Pages Messages Id
-        getNextPageMessages();
+        // getNextPageMessages();
 
         // Send Id list to getMessagesData to get Message Data foreach Id
         getMessagesData(resp);
@@ -110,8 +109,8 @@ const App = () => {
     // request.execute(getMessagesData);
   };
 
+  // ToDo
   const getNextPageMessages = () => {
-    // nextPageToken =
     return window.gapi.client.gmail.users.messages
       .list({
         userId: "eclipsegk10@gmail.com",
@@ -129,8 +128,8 @@ const App = () => {
             })
             .then(
               (response) => {
-                // setMessages((messages) => [...messages, response.result]);
-                console.log(response.result);
+                setMessages((messages) => [...messages, response.result]);
+                // console.log(response.result);
               },
               (err) => {
                 console.error("getMessagesData error", err);
@@ -191,12 +190,7 @@ const App = () => {
       <ThemeProvider>
         <CSSReset />
         {isAuthorize ? (
-          <Main
-            getMessages={getMessages}
-            getOneMessage={getOneMessage}
-            messages={messages}
-            message={message}
-          />
+          <Main />
         ) : (
           <SignIn loading={loading} handleAuthClick={handleAuthClick} />
         )}
@@ -224,7 +218,7 @@ const SignIn = ({ handleAuthClick, loading }) => (
   </Flex>
 );
 
-const Main = ({ getMessages, getOneMessage, messages, message }) => (
+const Main = () => (
   <Flex
     h='100vh'
     minH='600px'
@@ -234,8 +228,8 @@ const Main = ({ getMessages, getOneMessage, messages, message }) => (
     bg='#e5f4f1'
     color='white'
   >
-    <MailboxList getMessages={getMessages} />
-    <EmailList getOneMessage={getOneMessage} messages={messages} />
-    <Email message={message} />
+    <MailboxList />
+    <EmailList />
+    <Email />
   </Flex>
 );
