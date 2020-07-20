@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { EmailContext } from "../../App";
 import SendModel from "./SendModel";
-import PropTypes from "prop-types";
+
+// Import Icons
 import { Button, Box, List, ListItem } from "@chakra-ui/core";
 import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
 import { FiSend, FiFile } from "react-icons/fi";
 
-const MailboxList = ({ getMessages }) => {
+const MailboxList = () => {
+  const { getMessages } = useContext(EmailContext);
   const [active, setActive] = useState("INBOX");
 
   const handleClick = (e) => {
@@ -164,10 +167,6 @@ const MailboxList = ({ getMessages }) => {
       </List>
     </Box>
   );
-};
-
-MailboxList.prototype = {
-  getMessages: PropTypes.func.isRequired,
 };
 
 export default MailboxList;

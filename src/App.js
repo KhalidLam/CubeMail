@@ -1,29 +1,21 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import MailboxList from "./Components/MailboxList/MailboxList";
 import EmailList from "./Components/EmailList/EmailList";
 import Email from "./Components/Email/Email";
 
-import {
-  ThemeProvider,
-  CSSReset,
-  Button,
-  ButtonGroup,
-  Flex,
-  Grid,
-  Box,
-  IconButton,
-} from "@chakra-ui/core";
-
+import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 import { FcGoogle } from "react-icons/fc";
+
+export const EmailContext = React.createContext();
 
 const App = () => {
   // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState({});
+  const [nextPageToken, setNextPageToken] = useState("");
   const [isAuthorize, setIsAuthorize] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [nextPageToken, setNextPageToken] = useState("");
 
   useEffect(() => {
     window.gapi.load("client:auth2", {
@@ -188,26 +180,38 @@ const App = () => {
   };
 
   return (
-    <Fragment>
+    <EmailContext.Provider
+      value={{
+        messages,
+        message,
+        getMessages,
+        getOneMessage,
+      }}
+    >
       <ThemeProvider>
         <CSSReset />
         {isAuthorize ? (
-          <Main getMessages={getMessages} getOneMessage={getOneMessage} messages={messages} message={message} />
+          <Main
+            getMessages={getMessages}
+            getOneMessage={getOneMessage}
+            messages={messages}
+            message={message}
+          />
         ) : (
-          <SignIn loading={loading} handleAuthClick={handleAuthClick}/>
+          <SignIn loading={loading} handleAuthClick={handleAuthClick} />
         )}
       </ThemeProvider>
-    </Fragment>
+    </EmailContext.Provider>
   );
 };
 
 export default App;
 
-const SignIn = ({handleAuthClick, loading}) => (
+const SignIn = ({ handleAuthClick, loading }) => (
   <Flex h='100vh' justify='center' alignItems='center' bg='#e5f4f1'>
     <Button
       isLoading={loading}
-      loadingText='Loading...'
+      // loadingText='Loading...'
       leftIcon={FcGoogle}
       height='50px'
       variantColor='blue'
@@ -220,7 +224,7 @@ const SignIn = ({handleAuthClick, loading}) => (
   </Flex>
 );
 
-const Main = ({getMessages, getOneMessage, messages, message}) => (
+const Main = ({ getMessages, getOneMessage, messages, message }) => (
   <Flex
     h='100vh'
     minH='600px'
@@ -234,4 +238,4 @@ const Main = ({getMessages, getOneMessage, messages, message}) => (
     <EmailList getOneMessage={getOneMessage} messages={messages} />
     <Email message={message} />
   </Flex>
-)
+);

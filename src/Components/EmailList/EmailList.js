@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { EmailContext } from "../../App";
 import { getHeader, isEmpty, decodeHtml, removeQuote } from "../Helper";
-import PropTypes from "prop-types";
 import {
   Flex,
   Box,
@@ -13,7 +13,9 @@ import {
   Spinner,
 } from "@chakra-ui/core";
 
-const EmailList = ({ getOneMessage, messages }) => {
+const EmailList = () => {
+  const { getOneMessage, messages } = useContext(EmailContext);
+
   const handleMessageClick = (e) => {
     const messageId = e.currentTarget.getAttribute("id");
     getOneMessage(messageId);
@@ -107,8 +109,3 @@ const EmailList = ({ getOneMessage, messages }) => {
 };
 
 export default EmailList;
-
-EmailList.prototype = {
-  getOneMessage: PropTypes.func.isRequired,
-  messages: PropTypes.array.isRequired,
-};

@@ -1,10 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
+import { EmailContext } from "../../App";
 import ReplyModel from "./ReplyModel";
 import ForwardModel from "./ForwardModel";
-import { getHeader, isEmpty, removeQuote, formatDate } from "../Helper";
-import { MdArchive } from "react-icons/md";
+
+import { getHeader, isEmpty, removeQuote, formatDate } from "../Helper"; // Helper functions
 import { Base64 } from "js-base64";
-import PropTypes from "prop-types";
+import { MdArchive } from "react-icons/md"; // Icons
 import {
   Flex,
   Box,
@@ -15,7 +16,8 @@ import {
   useToast,
 } from "@chakra-ui/core";
 
-const Email = ({ message }) => {
+const Email = () => {
+  const { message } = useContext(EmailContext);
   const headers = isEmpty(message) ? [] : message.payload.headers;
   const toast = useToast();
 
@@ -215,7 +217,3 @@ const Email = ({ message }) => {
 };
 
 export default Email;
-
-Email.prototype = {
-  message: PropTypes.object.isRequired,
-};

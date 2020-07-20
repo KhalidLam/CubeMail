@@ -88,10 +88,6 @@ const SendModel = () => {
         borderRadius='20px'
         variant='solid'
         variantColor='blue'
-        // border='1px'
-        // borderColor='green.500'
-        // variantColor='green'
-        // variant='outline'
         onClick={onOpen}
       >
         New Message
