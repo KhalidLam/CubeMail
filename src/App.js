@@ -11,8 +11,10 @@ export const EmailContext = React.createContext();
 
 const App = () => {
   // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
-  const [messages, setMessages] = useState([]);
+  const [currentLabel, setCurrentLabel] = useState("INBOX");
   const [message, setMessage] = useState({});
+  const [messages, setMessages] = useState([]);
+  const [hasMoreMessages, setHasMoreMessages] = useState(true);
   const [nextPageToken, setNextPageToken] = useState("");
   const [isAuthorize, setIsAuthorize] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -81,7 +83,7 @@ const App = () => {
   };
 
   // ----------- Functions to Get Data from Gmail Api ------------
-  const getMessages = (labelIds = "INBOX") => {
+  const getMessages = (labelIds = currentLabel) => {
     // Get List of 20 message's Id
     window.gapi.client.gmail.users.messages
       .list({
@@ -94,10 +96,16 @@ const App = () => {
         setMessages([]);
 
         // Set NextPageToken
-        setNextPageToken(resp.nextPageToken);
+        if (resp.result.nextPageToken) {
+          setNextPageToken(resp.result.nextPageToken);
+          setHasMoreMessages(true);
+        } else {
+          setNextPageToken("");
+          setHasMoreMessages(false);
+        }
 
         // Get Next Pages Messages Id
-        // getNextPageMessages();
+        // loadMoreMessages();
 
         // Send Id list to getMessagesData to get Message Data foreach Id
         getMessagesData(resp);
@@ -109,41 +117,35 @@ const App = () => {
     // request.execute(getMessagesData);
   };
 
-  // ToDo
-  const getNextPageMessages = () => {
+  // To Implement Later
+  const loadMoreMessages = (labelIds = currentLabel) => {
     return window.gapi.client.gmail.users.messages
       .list({
-        userId: "eclipsegk10@gmail.com",
+        userId: "me",
+        labelIds: labelIds,
         maxResults: 20,
         pageToken: nextPageToken,
       })
-      .then((response) => {
-        console.log("Next Page Emails :", response.result);
-        // Send Request for each message Id
-        response.result.messages.forEach((message) => {
-          window.gapi.client.gmail.users.messages
-            .get({
-              userId: "me",
-              id: message.id,
-            })
-            .then(
-              (response) => {
-                setMessages((messages) => [...messages, response.result]);
-                // console.log(response.result);
-              },
-              (err) => {
-                console.error("getMessagesData error", err);
-              }
-            );
-        });
+      .then((resp) => {
+        if (resp.result.nextPageToken) {
+          setNextPageToken(resp.result.nextPageToken);
+          setHasMoreMessages(true);
+        } else {
+          setNextPageToken("");
+          setHasMoreMessages(false);
+        }
+
+        getMessagesData(resp);
       })
       .catch((err) => {
         console.error("Execute error", err);
       });
   };
 
-  const getMessagesData = (response) => {
-    const messages = response.result.messages ? response.result.messages : [];
+  const getMessagesData = (resp) => {
+    // if (!resp.result.resultSizeEstimate) setHasMoreMessages(false);
+
+    const messages = resp.result.messages ? resp.result.messages : [];
 
     messages.forEach((message) => {
       window.gapi.client.gmail.users.messages
@@ -152,8 +154,8 @@ const App = () => {
           id: message.id,
         })
         .then(
-          (response) => {
-            setMessages((messages) => [...messages, response.result]);
+          (resp) => {
+            setMessages((messages) => [...messages, resp.result]);
           },
           (err) => {
             console.error("getMessagesData error", err);
@@ -169,8 +171,8 @@ const App = () => {
         id: messageId,
       })
       .then(
-        (response) => {
-          setMessage(response.result);
+        (resp) => {
+          setMessage(resp.result);
         },
         (err) => {
           console.error("getMessage error", err);
@@ -185,6 +187,9 @@ const App = () => {
         message,
         getMessages,
         getOneMessage,
+        setCurrentLabel,
+        hasMoreMessages,
+        loadMoreMessages,
       }}
     >
       <ThemeProvider>

@@ -8,12 +8,13 @@ import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
 import { FiSend, FiFile } from "react-icons/fi";
 
 const MailboxList = () => {
-  const { getMessages } = useContext(EmailContext);
+  const { getMessages, setCurrentLabel } = useContext(EmailContext);
   const [active, setActive] = useState("INBOX");
 
   const handleClick = (e) => {
     const categoryId = e.target.id;
     setActive(categoryId);
+    setCurrentLabel(categoryId)
 
     // Get Messages using clicked category
     getMessages(categoryId);

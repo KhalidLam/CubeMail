@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { EmailContext } from "../../App";
-import { getHeader, isEmpty, decodeHtml, removeQuote } from "../Helper";
+import EmailRow from "./EmailRow";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {
   Flex,
   Box,
@@ -8,18 +9,11 @@ import {
   InputGroup,
   InputLeftElement,
   Icon,
-  Avatar,
-  Text,
   Spinner,
 } from "@chakra-ui/core";
 
 const EmailList = () => {
-  const { getOneMessage, messages } = useContext(EmailContext);
-
-  const handleMessageClick = (e) => {
-    const messageId = e.currentTarget.getAttribute("id");
-    getOneMessage(messageId);
-  };
+  const { messages } = useContext(EmailContext);
 
   return (
     <Flex
@@ -47,65 +41,61 @@ const EmailList = () => {
       </Box>
 
       {/* Message List */}
-      {isEmpty(messages) ? (
-        <Box mt={6} display='flex' align='center' justifyContent='center'>
-          <Spinner
-            thickness='4px'
-            speed='0.65s'
-            emptyColor='gray.200'
-            color='blue.500'
-            size='xl'
-          />
-        </Box>
-      ) : (
-        <Box overflowY='auto'>
-          {messages.map((message) => {
-            const name = removeQuote(
-              getHeader(message.payload.headers, "From").split("<")[0]
-            );
-            const subject = getHeader(message.payload.headers, "Subject");
-            const msg = decodeHtml(message.snippet.substr(0, 75));
-            const backgroundColor =
-              message.labelIds.indexOf("UNREAD") > -1 ? "#fff" : "#E2E8F0";
-
-            return (
-              <Flex
-                key={message.id}
-                id={message.id}
-                onClick={handleMessageClick}
-                wrap='no-wrap'
-                justify='space-around'
-                py={2}
-                bg={backgroundColor}
-                borderTop='1px'
-                borderBottom='1px'
-                borderColor='gray.300'
-                cursor='pointer'
-              >
-                <Avatar name={name} src='https://bit.ly/tioluwani-kolawole' />
-                <Box w='80%'>
-                  <Text fontSize='sm' color='gray.700' isTruncated>
-                    {name}
-                  </Text>
-                  <Text
-                    fontSize='md'
-                    fontWeight='bold'
-                    color='#3182ce'
-                    isTruncated
-                  >
-                    {subject}
-                  </Text>
-                  <Text fontSize='xs' color='gray.500'>
-                    {msg}
-                  </Text>
-                </Box>
-              </Flex>
-            );
-          })}
-        </Box>
-      )}
+      {!messages.length ? <ListSpinner /> : <MessagesList />}
     </Flex>
   );
 };
 
 export default EmailList;
+
+const MessagesList = () => {
+  const {
+    messages,
+    getOneMessage,
+    hasMoreMessages,
+    loadMoreMessages,
+  } = useContext(EmailContext);
+
+
+  const fetchMoreData = () => {
+    // Load more Messages
+    loadMoreMessages();
+  };
+
+  const handleMessageClick = (e) => {
+    const messageId = e.currentTarget.getAttribute("id");
+    getOneMessage(messageId);
+  };
+
+  return (
+    <Box overflowY='auto' id='scrollableDiv'>
+      <InfiniteScroll
+        dataLength={messages.length}
+        next={fetchMoreData}
+        hasMore={hasMoreMessages}
+        loader={<h4>Loading...</h4>}
+        scrollableTarget='scrollableDiv'
+      >
+        {messages.map((message, index) => (
+          <EmailRow
+            key={index}
+            message={message}
+            handleMessageClick={handleMessageClick}
+          />
+        ))}
+      </InfiniteScroll>
+    </Box>
+  );
+};
+
+const ListSpinner = () => (
+  <Box mt={6} display='flex' align='center' justifyContent='center'>
+    <Spinner
+      thickness='4px'
+      speed='0.65s'
+      emptyColor='gray.200'
+      color='blue.500'
+      size='xl'
+    />
+  </Box>
+);
