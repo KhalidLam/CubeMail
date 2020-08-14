@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/CubeMail/static/js/main.9b499868.chunk.js",
-    "main.js.map": "/CubeMail/static/js/main.9b499868.chunk.js.map",
+    "main.js": "/CubeMail/static/js/main.e77b2629.chunk.js",
+    "main.js.map": "/CubeMail/static/js/main.e77b2629.chunk.js.map",
     "runtime-main.js": "/CubeMail/static/js/runtime-main.e3af2818.js",
     "runtime-main.js.map": "/CubeMail/static/js/runtime-main.e3af2818.js.map",
-    "static/js/2.b2639aa2.chunk.js": "/CubeMail/static/js/2.b2639aa2.chunk.js",
-    "static/js/2.b2639aa2.chunk.js.map": "/CubeMail/static/js/2.b2639aa2.chunk.js.map",
+    "static/js/2.7fba1e3b.chunk.js": "/CubeMail/static/js/2.7fba1e3b.chunk.js",
+    "static/js/2.7fba1e3b.chunk.js.map": "/CubeMail/static/js/2.7fba1e3b.chunk.js.map",
     "index.html": "/CubeMail/index.html",
-    "precache-manifest.c8f627178853ee7b2c923833a7ca28a1.js": "/CubeMail/precache-manifest.c8f627178853ee7b2c923833a7ca28a1.js",
+    "precache-manifest.e29bf9f36783eb66ec58141256b35435.js": "/CubeMail/precache-manifest.e29bf9f36783eb66ec58141256b35435.js",
     "service-worker.js": "/CubeMail/service-worker.js",
-    "static/js/2.b2639aa2.chunk.js.LICENSE.txt": "/CubeMail/static/js/2.b2639aa2.chunk.js.LICENSE.txt"
+    "static/js/2.7fba1e3b.chunk.js.LICENSE.txt": "/CubeMail/static/js/2.7fba1e3b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e3af2818.js",
-    "static/js/2.b2639aa2.chunk.js",
-    "static/js/main.9b499868.chunk.js"
+    "static/js/2.7fba1e3b.chunk.js",
+    "static/js/main.e77b2629.chunk.js"
   ]
 }
