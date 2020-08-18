@@ -4,9 +4,10 @@
 
 CubeMail is a webmail-client built using [Create-React-App](https://github.com/facebook/create-react-app) and [Chakra UI](https://github.com/chakra-ui/chakra-ui/), It runs completely in the browser and uses the [Gmail's public Javascript API](https://developers.google.com/gmail/api/).
 
-Try it out at https://khalidlam.github.io/CubeMail/
+## [Check it live here](https://khalidlam.github.io/CubeMail/)
 
-## How does it work? 
+## How does it work?
+
 The account sign-in and authentication process is **totally managed by Gmail's secure protocols**. The workflow is as follows:
 
 - First-time users will see a landing page with a button to sign in to Gmail.
@@ -20,14 +21,24 @@ The account sign-in and authentication process is **totally managed by Gmail's s
 - All Gmail API requests require an **_API Key_** and an **_OAuth 2.0 Client ID_**. You can follow [these instructions](https://developers.google.com/fit/android/get-api-key) to obtain those credentials. Then, store those two values in the **_[.env](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables)_** file located in the root folder by replacing `<YOUR_API_KEY>` and `<YOUR_CLIENT_ID>` respectively.
 
 ## Getting started
-1. Clone
-2. Create a `.env` file at the root directory of your application 
-3. Add your Google Api credentials to `.env` like this :<br/>
-    `REACT_APP_CLIENT_ID=<YOUR-CLIENT-ID>`<br/>
-    `REACT_APP_API_KEY=<YOUR-API-KEY>`<br/>
-    `REACT_APP_SCOPES=https://mail.google.com/`
-2. Run: `npm install`
-3. Run: `npm start`
+
+1. Clone this repo
+
+```sh
+$ git clone https://github.com/KhalidLam/CubeMail.git
+$ cd  CubeMail
+$ npm install
+```
+
+2. Create a `.env` file at the root directory and add your Google Api credentials - [Google Api](https://console.developers.google.com)
+
+```sh
+    REACT_APP_CLIENT_ID=<YOUR-CLIENT-ID>
+    REACT_APP_API_KEY=<YOUR-API-KEY>
+    REACT_APP_SCOPES=https://mail.google.com/
+```
+
+3. Run: `$ npm start`
 4. Open http://localhost:3000 in your browser.
 
 ## Technologies used
