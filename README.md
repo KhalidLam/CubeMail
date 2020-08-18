@@ -60,7 +60,7 @@ $ npm install
 - [ ] Add Search Feature
 - [ ] Display user's Labels
 - [ ] Add Animation on Buttons
-- [ ] Add Infinite scrolling
+- [X] Add Infinite scrolling
 
 ### License:
 
