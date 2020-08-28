@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 
 import MailboxList from "./Components/MailboxList/MailboxList";
 import EmailList from "./Components/EmailList/EmailList";
@@ -7,7 +7,9 @@ import Email from "./Components/Email/Email";
 import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 import { FcGoogle } from "react-icons/fc";
 
-export const EmailContext = React.createContext();
+import EmailState from "./context/email/EmailState";
+
+export const EmailContext = createContext();
 
 const App = () => {
   // const [labels, setlabels] = useState([]); // Todo - sort labels dynamically
@@ -181,26 +183,28 @@ const App = () => {
   };
 
   return (
-    <EmailContext.Provider
-      value={{
-        messages,
-        message,
-        getMessages,
-        getOneMessage,
-        setCurrentLabel,
-        hasMoreMessages,
-        loadMoreMessages,
-      }}
-    >
-      <ThemeProvider>
-        <CSSReset />
-        {isAuthorize ? (
-          <Main />
-        ) : (
-          <SignIn loading={loading} handleAuthClick={handleAuthClick} />
-        )}
-      </ThemeProvider>
-    </EmailContext.Provider>
+    <EmailState>
+      <EmailContext.Provider
+        value={{
+          messages,
+          message,
+          getMessages,
+          getOneMessage,
+          setCurrentLabel,
+          hasMoreMessages,
+          loadMoreMessages,
+        }}
+      >
+        <ThemeProvider>
+          <CSSReset />
+          {isAuthorize ? (
+            <Main />
+          ) : (
+            <SignIn loading={loading} handleAuthClick={handleAuthClick} />
+          )}
+        </ThemeProvider>
+      </EmailContext.Provider>
+    </EmailState>
   );
 };
 

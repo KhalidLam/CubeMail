@@ -1,0 +1,8 @@
+export const SET_MESSAGE = "SET_MESSAGE";
+export const GET_MESSAGE = "GET_MESSAGE";
+export const SET_MESSAGES = "SET_MESSAGES";
+export const GET_MESSAGES = "GET_MESSAGES";
+export const SET_LOADING = "SET_LOADING";
+export const SET_IS_AUTHORIZE = "SET_IS_AUTHORIZE";
+export const SET_CURRENT_LABEL = "SET_CURRENT_LABEL";
+export const GET_CURRENT_LABEL = "GET_CURRENT_LABEL";
