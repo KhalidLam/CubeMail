@@ -1,9 +1,10 @@
 import React, { Fragment, useContext } from "react";
-import { EmailContext } from "../../App";
+import EmailContext from "../../context/email/emailContext";
+
 import ReplyModel from "./ReplyModel";
 import ForwardModel from "./ForwardModel";
 
-import { getHeader, isEmpty, removeQuote, formatDate } from "../Helper"; // Helper functions
+import { getHeader, removeQuote, formatDate } from "../Helper"; // Helper functions
 import { Base64 } from "js-base64";
 import { MdArchive } from "react-icons/md"; // Icons
 import {
@@ -18,11 +19,11 @@ import {
 
 const Email = () => {
   const { message } = useContext(EmailContext);
-  const headers = isEmpty(message) ? [] : message.payload.headers;
+  const headers = message ? message.payload.headers : [];
   const toast = useToast();
 
   React.useEffect(() => {
-    if (!isEmpty(message)) {
+    if (message) {
       addToFrame(message);
     }
     // eslint-disable-next-line
@@ -144,7 +145,7 @@ const Email = () => {
       borderTopRightRadius='md'
       borderBottomRightRadius='md'
     >
-      {!isEmpty(message) && (
+      {message && (
         <Fragment>
           {/* Header Buttons */}
           <Flex justify='space-around' wrap='no-wrap' mb={2}>

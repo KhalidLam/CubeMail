@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { EmailContext } from "../../App";
+import EmailContext from "../../context/email/emailContext";
 import SendModel from "./SendModel";
 
 // Import Icons
@@ -14,7 +14,7 @@ const MailboxList = () => {
   const handleClick = (e) => {
     const categoryId = e.target.id;
     setActive(categoryId);
-    setCurrentLabel(categoryId)
+    setCurrentLabel(categoryId);
 
     // Get Messages using clicked category
     getMessages(categoryId);

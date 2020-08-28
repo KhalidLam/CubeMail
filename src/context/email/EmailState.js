@@ -3,19 +3,20 @@ import EmailContext from "./emailContext";
 import EmailReducer from "./emailReducer";
 import {
   SET_MESSAGE,
-  GET_MESSAGE,
   SET_MESSAGES,
-  GET_MESSAGES,
+  CLEAR_MESSAGES,
   SET_LOADING,
-  SET_IS_AUTHORIZE,
   SET_CURRENT_LABEL,
-  GET_CURRENT_LABEL,
+  SET_NEXT_PAGE_TOKEN,
+  SET_HAS_MORE_MESSAGES,
 } from "../types";
 
-const EmailStat = (props) => {
+const EmailState = (props) => {
   const initialState = {
     messages: [],
-    message: {},
+    message: null,
+    currentLabel: "INBOX",
+    nextPageToken: "",
     hasMoreMessages: true,
     isAuthorize: false,
     loading: false,
@@ -23,22 +24,127 @@ const EmailStat = (props) => {
 
   const [state, dispatch] = useReducer(EmailReducer, initialState);
 
-  // Get Authorisation
+  // Send reques to get IDs of 20 Messages and call getMessagesData(Ids)
+  const getMessages = (labelIds = state.currentLabel) => {
+    // Set Loading to true
+    setLoading();
 
-  // Get Messages
+    // Empty previous messages
+    clearMessages();
+
+    const request = window.gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: labelIds,
+      maxResults: 20,
+    });
+
+    request.execute((resp) => {
+      console.log("getMessagesData OK");
+
+      // Set NextPageToken
+      if (resp.result.nextPageToken) {
+        setNextPageToken(resp.result.nextPageToken);
+        setHasMoreMessages(true);
+      } else {
+        setNextPageToken("");
+        setHasMoreMessages(false);
+      }
+
+      // Send Id list to getMessagesData to get Message Data foreach Id
+      getMessagesData(resp);
+    });
+  };
+
+  // Send Request to get data of each message
+  const getMessagesData = (resp) => {
+    const messages = resp.result.messages ? resp.result.messages : [];
+
+    // Get Data for each message
+    messages.forEach((message) => {
+      const request = window.gapi.client.gmail.users.messages.get({
+        userId: "me",
+        id: message.id,
+      });
+
+      request.execute((resp) => {
+        dispatch({
+          type: SET_MESSAGES,
+          payload: resp.result,
+        });
+      });
+    });
+  };
 
   // Get Message
+  const getOneMessage = (messageId) => {
+    const request = window.gapi.client.gmail.users.messages.get({
+      userId: "me",
+      id: messageId,
+    });
+
+    request.execute((resp) => {
+      console.log(resp);
+      dispatch({
+        type: SET_MESSAGE,
+        payload: resp.result,
+      });
+    });
+  };
+
+  // Load More Messages
+  const loadMoreMessages = (labelIds = state.currentLabel) => {
+    const request = window.gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: labelIds,
+      maxResults: 20,
+      pageToken: state.nextPageToken,
+    });
+
+    request.execute((resp) => {
+      if (resp.result.nextPageToken) {
+        setNextPageToken(resp.result.nextPageToken);
+        setHasMoreMessages(true);
+      } else {
+        setNextPageToken("");
+        setHasMoreMessages(false);
+      }
+
+      getMessagesData(resp);
+    });
+  };
+
+  // Set Next Page Token
+  const setNextPageToken = (token) =>
+    dispatch({ type: SET_NEXT_PAGE_TOKEN, payload: token });
+
+  // Set Has More Messages
+  const setHasMoreMessages = (bool) =>
+    dispatch({ type: SET_HAS_MORE_MESSAGES, payload: bool });
+
+  // Set Current Label
+  const setCurrentLabel = (labelId) =>
+    dispatch({ type: SET_CURRENT_LABEL, payload: labelId });
 
   // Clear Messages
+  const clearMessages = () => dispatch({ type: CLEAR_MESSAGES });
 
   // Set Loading
+  const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
     <EmailContext.Provider
       value={{
         messages: state.messages,
         message: state.message,
+        currentLabel: state.currentLabel,
+        nextPageToken: state.nextPageToken,
+        hasMoreMessages: state.hasMoreMessages,
         loading: state.loading,
+        getMessages,
+        getOneMessage,
+        setCurrentLabel,
+        loadMoreMessages,
+        setLoading,
       }}
     >
       {props.children}
@@ -46,19 +152,4 @@ const EmailStat = (props) => {
   );
 };
 
-export default EmailStat;
-
-{
-  /* <EmailContext.Provider
-      value={{
-        messages: state.messages,
-        message: state.message,
-        loading: state.loading,
-        getMessages,
-        getOneMessage,
-        setCurrentLabel,
-        hasMoreMessages,
-        loadMoreMessages,
-      }}
-    ></EmailContext.Provider> */
-}
+export default EmailState;
