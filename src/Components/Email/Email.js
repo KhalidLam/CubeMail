@@ -15,7 +15,10 @@ import {
   Avatar,
   Text,
   useToast,
+  Heading,
 } from "@chakra-ui/core";
+
+import emptyEmailImg from "./empty_email.svg";
 
 const Email = () => {
   const { message } = useContext(EmailContext);
@@ -145,7 +148,9 @@ const Email = () => {
       borderTopRightRadius='md'
       borderBottomRightRadius='md'
     >
-      {message && (
+      {!message ? (
+        <EmptyMail />
+      ) : (
         <Fragment>
           {/* Header Buttons */}
           <Flex justify='space-around' wrap='no-wrap' mb={2}>
@@ -218,3 +223,22 @@ const Email = () => {
 };
 
 export default Email;
+
+const EmptyMail = () => (
+  <Flex
+    flexDirection='column'
+    justify='center'
+    alignItems='center'
+    mb={3}
+    style={{ height: "100%" }}
+  >
+    <img
+      src={emptyEmailImg}
+      alt='React Logo'
+      style={{ width: "40%", height: "auto" }}
+    />
+    <Heading as='h3' size='lg' color='#a6b0b7' mt={5}>
+      Click on Email to Open it
+    </Heading>
+  </Flex>
+);

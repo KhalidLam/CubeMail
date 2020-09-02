@@ -10,10 +10,10 @@ import Email from "./Components/Email/Email";
 import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
 import { FcGoogle } from "react-icons/fc";
 
-const SignIn = ({ handleAuthClick }) => (
+const SignIn = ({ handleAuthClick, loading }) => (
   <Flex h='100vh' justify='center' alignItems='center' bg='#e5f4f1'>
     <Button
-      isLoading={true}
+      isLoading={loading}
       leftIcon={FcGoogle}
       height='50px'
       variantColor='blue'
@@ -56,7 +56,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const gapiLoading = async () => {
+    (async () => {
       await window.gapi.load("client:auth2", {
         callback: () => {
           // Handle gapi.client initialization.
@@ -80,8 +80,8 @@ const App = () => {
           console.log("gapi.client could not load in a timely manner!");
         },
       });
-    };
-    gapiLoading();
+    })();
+
     // eslint-disable-next-line
   }, []);
 
