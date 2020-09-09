@@ -1,10 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  Box,
-  Input,
-  InputGroup,
-  IconButton,
-} from "@chakra-ui/core";
+import { Box, Input, InputGroup, IconButton } from "@chakra-ui/core";
 import EmailContext from "../../context/email/emailContext";
 
 const SearchBar = () => {
