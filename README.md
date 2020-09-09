@@ -57,7 +57,7 @@ $ npm install
 ## Todo
 
 - [ ] Make App responsive
-- [ ] Add Search Feature
+- [X] Add Search Feature
 - [ ] Display user's Labels
 - [ ] Add Animation on Buttons
 - [X] Add Infinite scrolling
