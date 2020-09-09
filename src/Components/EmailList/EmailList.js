@@ -1,66 +1,19 @@
 import React, { useContext } from "react";
-import { EmailContext } from "../../App";
+import EmailContext from "../../context/email/emailContext";
+
 import EmailRow from "./EmailRow";
+import SearchBar from "./SearchBar";
+
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  Flex,
-  Box,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Icon,
-  Spinner,
-} from "@chakra-ui/core";
+import { Flex, Box, Spinner } from "@chakra-ui/core";
 
-const EmailList = () => {
-  const { messages } = useContext(EmailContext);
-
-  return (
-    <Flex
-      direction='column'
-      wrap='no-wrap'
-      w='26%'
-      h='100%'
-      bg='#f1f1f1'
-      color='black'
-    >
-      {/* Search bar */}
-      <Box py='5px' bg='white' border='1px' borderColor='gray.200'>
-        <InputGroup size='lg'>
-          <InputLeftElement
-            children={<Icon name='search' color='gray.300' />}
-          />
-          <Input
-            type='text'
-            placeholder='Search mail'
-            borderWidth='0px'
-            borderRadius='0px'
-            focusBorderColor='white'
-          />
-        </InputGroup>
-      </Box>
-
-      {/* Message List */}
-      {!messages.length ? <ListSpinner /> : <MessagesList />}
-    </Flex>
-  );
-};
-
-export default EmailList;
-
-const MessagesList = () => {
+const Messages = () => {
   const {
     messages,
     getOneMessage,
     hasMoreMessages,
     loadMoreMessages,
   } = useContext(EmailContext);
-
-
-  const fetchMoreData = () => {
-    // Load more Messages
-    loadMoreMessages();
-  };
 
   const handleMessageClick = (e) => {
     const messageId = e.currentTarget.getAttribute("id");
@@ -71,7 +24,7 @@ const MessagesList = () => {
     <Box overflowY='auto' id='scrollableDiv'>
       <InfiniteScroll
         dataLength={messages.length}
-        next={fetchMoreData}
+        next={loadMoreMessages}
         hasMore={hasMoreMessages}
         loader={<h4>Loading...</h4>}
         scrollableTarget='scrollableDiv'
@@ -88,7 +41,7 @@ const MessagesList = () => {
   );
 };
 
-const ListSpinner = () => (
+const CustomSpinner = () => (
   <Box mt={6} display='flex' align='center' justifyContent='center'>
     <Spinner
       thickness='4px'
@@ -99,3 +52,26 @@ const ListSpinner = () => (
     />
   </Box>
 );
+
+const EmailList = () => {
+  const { messages, loading } = useContext(EmailContext);
+
+  return (
+    <Flex
+      direction='column'
+      wrap='no-wrap'
+      w='26%'
+      h='100%'
+      bg='#f1f1f1'
+      color='black'
+    >
+      {/* Search bar */}
+      <SearchBar />
+
+      {/* Messages */}
+      {!messages.length && loading ? <CustomSpinner /> : <Messages />}
+    </Flex>
+  );
+};
+
+export default EmailList;

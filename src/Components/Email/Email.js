@@ -1,9 +1,10 @@
 import React, { Fragment, useContext } from "react";
-import { EmailContext } from "../../App";
+import EmailContext from "../../context/email/emailContext";
+
 import ReplyModel from "./ReplyModel";
 import ForwardModel from "./ForwardModel";
 
-import { getHeader, isEmpty, removeQuote, formatDate } from "../Helper"; // Helper functions
+import { getHeader, removeQuote, formatDate } from "../Helper"; // Helper functions
 import { Base64 } from "js-base64";
 import { MdArchive } from "react-icons/md"; // Icons
 import {
@@ -14,15 +15,18 @@ import {
   Avatar,
   Text,
   useToast,
+  Heading,
 } from "@chakra-ui/core";
+
+import emptyEmailImg from "./empty_email.svg";
 
 const Email = () => {
   const { message } = useContext(EmailContext);
-  const headers = isEmpty(message) ? [] : message.payload.headers;
+  const headers = message ? message.payload.headers : [];
   const toast = useToast();
 
   React.useEffect(() => {
-    if (!isEmpty(message)) {
+    if (message) {
       addToFrame(message);
     }
     // eslint-disable-next-line
@@ -144,7 +148,9 @@ const Email = () => {
       borderTopRightRadius='md'
       borderBottomRightRadius='md'
     >
-      {!isEmpty(message) && (
+      {!message ? (
+        <EmptyMail />
+      ) : (
         <Fragment>
           {/* Header Buttons */}
           <Flex justify='space-around' wrap='no-wrap' mb={2}>
@@ -217,3 +223,22 @@ const Email = () => {
 };
 
 export default Email;
+
+const EmptyMail = () => (
+  <Flex
+    flexDirection='column'
+    justify='center'
+    alignItems='center'
+    mb={3}
+    style={{ height: "100%" }}
+  >
+    <img
+      src={emptyEmailImg}
+      alt='React Logo'
+      style={{ width: "40%", height: "auto" }}
+    />
+    <Heading as='h3' size='lg' color='#a6b0b7' mt={5}>
+      Click on Email to Open it
+    </Heading>
+  </Flex>
+);
