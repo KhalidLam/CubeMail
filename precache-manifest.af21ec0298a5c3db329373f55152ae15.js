@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2bd627688ed4e497d4edda433da5ec96",
+    "revision": "6b5f75ff701e8faf6893fa2b6a565120",
     "url": "/CubeMail/index.html"
   },
   {
-    "revision": "7782e5189e5afd982430",
-    "url": "/CubeMail/static/js/2.d62afa75.chunk.js"
+    "revision": "5061250781c4d17c42f8",
+    "url": "/CubeMail/static/js/2.1348d52a.chunk.js"
   },
   {
     "revision": "5bd09eb7f2cf4d145d532d862be18942",
-    "url": "/CubeMail/static/js/2.d62afa75.chunk.js.LICENSE.txt"
+    "url": "/CubeMail/static/js/2.1348d52a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "245f22910400d9521142",
-    "url": "/CubeMail/static/js/main.e82d3df4.chunk.js"
+    "revision": "1b56b617179479faa8a5",
+    "url": "/CubeMail/static/js/main.b6853b65.chunk.js"
   },
   {
     "revision": "02c88928f9594843aaaa",
