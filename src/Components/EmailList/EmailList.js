@@ -1,19 +1,13 @@
 import React, { useContext } from "react";
 import EmailContext from "../../context/email/emailContext";
+
 import EmailRow from "./EmailRow";
+import SearchBar from "./SearchBar";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  Flex,
-  Box,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Icon,
-  Spinner,
-} from "@chakra-ui/core";
+import { Flex, Box, Spinner } from "@chakra-ui/core";
 
-const MessagesList = () => {
+const Messages = () => {
   const {
     messages,
     getOneMessage,
@@ -47,7 +41,7 @@ const MessagesList = () => {
   );
 };
 
-const ListSpinner = () => (
+const CustomSpinner = () => (
   <Box mt={6} display='flex' align='center' justifyContent='center'>
     <Spinner
       thickness='4px'
@@ -72,23 +66,10 @@ const EmailList = () => {
       color='black'
     >
       {/* Search bar */}
-      <Box py='5px' bg='white' border='1px' borderColor='gray.200'>
-        <InputGroup size='lg'>
-          <InputLeftElement
-            children={<Icon name='search' color='gray.300' />}
-          />
-          <Input
-            type='text'
-            placeholder='Search mail'
-            borderWidth='0px'
-            borderRadius='0px'
-            focusBorderColor='white'
-          />
-        </InputGroup>
-      </Box>
+      <SearchBar />
 
-      {/* Message List */}
-      {!messages.length && loading ? <ListSpinner /> : <MessagesList />}
+      {/* Messages */}
+      {!messages.length && loading ? <CustomSpinner /> : <Messages />}
     </Flex>
   );
 };

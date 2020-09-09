@@ -39,8 +39,6 @@ const EmailState = (props) => {
     });
 
     request.execute((resp) => {
-      console.log("getMessagesData OK");
-
       // Set NextPageToken
       if (resp.result.nextPageToken) {
         setNextPageToken(resp.result.nextPageToken);
@@ -53,6 +51,23 @@ const EmailState = (props) => {
       // Send Id list to getMessagesData to get Message Data foreach Id
       getMessagesData(resp);
     });
+  };
+
+  const getMessagesQuery = (query) => {
+    // Set Loading to true
+    setLoading();
+
+    // Empty previous messages
+    clearMessages();
+
+    // Get List of 20 message's Id
+    const request = window.gapi.client.gmail.users.messages.list({
+      userId: "me",
+      q: query,
+    });
+
+    // Send Id list to getMessagesData to get Message Data foreach Id
+    request.execute(getMessagesData);
   };
 
   // Send Request to get data of each message
@@ -141,6 +156,7 @@ const EmailState = (props) => {
         hasMoreMessages: state.hasMoreMessages,
         loading: state.loading,
         getMessages,
+        getMessagesQuery,
         getOneMessage,
         setCurrentLabel,
         loadMoreMessages,
