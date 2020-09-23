@@ -1,55 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 
+// Import Context
 import EmailState from "./context/email/EmailState";
-import EmailContext from "./context/email/emailContext";
 
-import MailboxList from "./Components/MailboxList/MailboxList";
-import EmailList from "./Components/EmailList/EmailList";
-import Email from "./Components/Email/Email";
+// Import Pages
+import Main from "./pages/Main";
+import SignIn from "./pages/SignIn";
 
-import { ThemeProvider, CSSReset, Button, Flex } from "@chakra-ui/core";
-import { FcGoogle } from "react-icons/fc";
-
-const SignIn = ({ handleAuthClick, loading }) => (
-  <Flex h='100vh' justify='center' alignItems='center' bg='#e5f4f1'>
-    <Button
-      isLoading={loading}
-      leftIcon={FcGoogle}
-      height='50px'
-      variantColor='blue'
-      variant='outline'
-      backgroundColor='white'
-      onClick={handleAuthClick}
-    >
-      Sign in with Google
-    </Button>
-  </Flex>
-);
-
-const Main = () => {
-  const { getMessages } = useContext(EmailContext);
-
-  useEffect(() => {
-    getMessages();
-    // eslint-disable-next-line
-  }, []);
-
-  return (
-    <Flex
-      h='100vh'
-      minH='600px'
-      justify='space-arround'
-      wrap='no-wrap'
-      p='1em'
-      bg='#e5f4f1'
-      color='white'
-    >
-      <MailboxList />
-      <EmailList />
-      <Email />
-    </Flex>
-  );
-};
+import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 
 const App = () => {
   const [isAuthorize, setIsAuthorize] = useState(false);
