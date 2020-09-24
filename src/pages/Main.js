@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import EmailContext from "../context/email/emailContext";
+import EmailContext from "../context/email/emailContext"
 
 // Import Components
 import MailboxList from "../Components/MailboxList/MailboxList";
