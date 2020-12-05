@@ -30,12 +30,10 @@ $ cd  CubeMail
 $ npm install
 ```
 
-2. Create a `.env` file at the root directory and add your Google Api credentials - [Google Api](https://console.developers.google.com)
+2. Create a `.env` from `.env.example` and add your Goodle API credentials - [Google Api](https://console.developers.google.com)
 
-```sh
-    REACT_APP_CLIENT_ID=<YOUR-CLIENT-ID>
-    REACT_APP_API_KEY=<YOUR-API-KEY>
-    REACT_APP_SCOPES=https://mail.google.com/
+```
+$ cp .env.example .env
 ```
 
 3. Run: `$ npm start`
@@ -56,11 +54,13 @@ $ npm install
 
 ## Todo
 
-- [ ] Make App responsive
-- [X] Add Search Feature
+- [ ] Make app responsive
+- [x] Add search feature
 - [ ] Display user's Labels
-- [ ] Add Animation on Buttons
-- [X] Add Infinite scrolling
+- [ ] Add animation on Buttons
+- [x] Add infinite scrolling
+- [ ] Error handling on login or connexion issues
+- [ ] Switch to Redux instead of Context API
 
 ### License:
 
