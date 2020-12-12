@@ -30,7 +30,7 @@ $ cd  CubeMail
 $ npm install
 ```
 
-2. Create a `.env` from `.env.example` and add your Goodle API credentials - [Google Api](https://console.developers.google.com)
+2. Create a `.env` from `.env.example` and add your Google API credentials - [Google Api](https://console.developers.google.com)
 
 ```
 $ cp .env.example .env
