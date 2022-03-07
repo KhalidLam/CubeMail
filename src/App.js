@@ -11,10 +11,12 @@ import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 
 const App = () => {
   const [isAuthorize, setIsAuthorize] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    setLoading(true);
+
+    const initialGoogleConnection = async () => {
       await window.gapi.load("client:auth2", {
         callback: () => {
           // Handle gapi.client initialization.
@@ -38,8 +40,15 @@ const App = () => {
           console.log("gapi.client could not load in a timely manner!");
         },
       });
-    })();
+    };
 
+    try {
+      initialGoogleConnection();
+    } catch (error) {
+      console.log("error: ", error);
+    }
+
+    setLoading(false);
     // eslint-disable-next-line
   }, []);
 
@@ -51,8 +60,8 @@ const App = () => {
     } else {
       console.error("handleAuthResult...");
       console.error(authResult);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const handleAuthClick = () => {

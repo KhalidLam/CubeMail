@@ -36,8 +36,10 @@ $ npm install
 $ cp .env.example .env
 ```
 
-3. Run: `$ npm start`
-4. Open http://localhost:3000 in your browser.
+3. enable Gmail API - [Enable Google APIs](https://support.google.com/googleapi/answer/6158841?hl=en)
+
+4. Run: `$ npm start`
+5. Open http://localhost:3000 in your browser.
 
 ## Technologies used
 
