@@ -5,11 +5,10 @@
   "main": "index.js",
   "homepage": "https://KhalidLam.github.io/CubeMail",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "react-scripts build",
-    "test": "react-scripts start"
+    "build": "react-scripts build"
   },
   "author": "Khalid Lam",
   "license": "ISC",
