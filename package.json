@@ -1,6 +1,6 @@
 {
   "name": "react-gmail-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Gmail React App using JavaScript Gmail API",
   "main": "index.js",
   "homepage": "https://KhalidLam.github.io/CubeMail",
@@ -8,24 +8,33 @@
     "start": "react-scripts --openssl-legacy-provider start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "react-scripts build"
+    "build": "react-scripts --openssl-legacy-provider build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,md}"
   },
   "author": "Khalid Lam",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "gh-pages": "^3.0.0"
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "gh-pages": "^6.1.0",
+    "prettier": "^3.1.1",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@chakra-ui/core": "^0.8.0",
-    "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
-    "emotion-theming": "^10.0.27",
-    "js-base64": "^2.5.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-icons": "^3.10.0",
-    "react-infinite-scroll-component": "^5.0.5",
-    "react-scripts": "^3.4.3"
+    "@chakra-ui/react": "^1.8.8",
+    "framer-motion": "^4.1.17",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "js-base64": "^3.7.5",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.12.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-scripts": "^4.0.3",
+    "web-vitals": "^3.5.0"
   },
   "browserslist": {
     "production": [
@@ -38,5 +47,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }

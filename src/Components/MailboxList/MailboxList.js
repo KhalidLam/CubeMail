@@ -3,9 +3,9 @@ import EmailContext from "../../context/email/emailContext";
 import SendModel from "./SendModel";
 
 // Import Icons
-import { Button, Box, List, ListItem } from "@chakra-ui/core";
+import { Button, Box, List, ListItem } from "@chakra-ui/react";
 import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
-import { FiSend, FiFile } from "react-icons/fi";
+import { FiSend, FiFile, FiTrash } from "react-icons/fi";
 
 const MailboxList = () => {
   const { getMessages, setCurrentLabel } = useContext(EmailContext);
@@ -22,13 +22,14 @@ const MailboxList = () => {
 
   return (
     <Box
-      w='16%'
-      h='100%'
+      w={{ base: '100%', lg: '16%' }}
+      h={{ base: 'auto', lg: '100%' }}
       bg='white'
       border='1px'
       borderColor='gray.200'
       borderTopLeftRadius='md'
       borderBottomLeftRadius='md'
+      minH={{ base: '200px', lg: 'auto' }}
     >
       <List>
         {/* Send Model */}
@@ -44,7 +45,7 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon={MdInbox}
+            leftIcon={<MdInbox />}
             variantColor='blue'
             variant={active === "INBOX" ? "solid" : "ghost"}
             justifyContent='flex-start'
@@ -60,7 +61,7 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon={MdStar}
+            leftIcon={<MdStar />}
             variantColor='blue'
             variant={active === "STARRED" ? "solid" : "ghost"}
             justifyContent='flex-start'
@@ -76,7 +77,7 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon={MdLabel}
+            leftIcon={<MdLabel />}
             variantColor='blue'
             variant={active === "IMPORTANT" ? "solid" : "ghost"}
             justifyContent='flex-start'
@@ -92,7 +93,7 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon={FiSend}
+            leftIcon={<FiSend />}
             variantColor='blue'
             variant={active === "SENT" ? "solid" : "ghost"}
             justifyContent='flex-start'
@@ -108,7 +109,7 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon={FiFile}
+            leftIcon={<FiFile />}
             variantColor='blue'
             variant={active === "DRAFT" ? "solid" : "ghost"}
             justifyContent='flex-start'
@@ -124,10 +125,10 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon='delete'
+            leftIcon={<FiTrash />}
             variantColor='blue'
             variant={active === "TRASH" ? "solid" : "ghost"}
-            justifyContent='flxex-start'
+            justifyContent='flex-start'
             onClick={handleClick}
           >
             Trash
@@ -140,10 +141,10 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon={MdPeople}
+            leftIcon={<MdPeople />}
             variantColor='blue'
             variant={active === "CATEGORY_SOCIAL" ? "solid" : "ghost"}
-            justifyContent='flxex-start'
+            justifyContent='flex-start'
             onClick={handleClick}
           >
             Social
@@ -156,10 +157,10 @@ const MailboxList = () => {
             h='45px'
             py={2}
             pl={8}
-            leftIcon={MdLoyalty}
+            leftIcon={<MdLoyalty />}
             variantColor='blue'
             variant={active === "CATEGORY_PROMOTIONS" ? "solid" : "ghost"}
-            justifyContent='flxex-start'
+            justifyContent='flex-start'
             onClick={handleClick}
           >
             Promotions

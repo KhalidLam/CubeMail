@@ -17,7 +17,7 @@ import {
   Textarea,
   useToast,
   useDisclosure,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 
 const ForwardModel = ({ forwardData, getMessageBody }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -89,7 +89,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
   return (
     <Fragment>
       <Button
-        rightIcon={MdArrowForward}
+        rightIcon={<MdArrowForward />}
         variantColor='blue'
         variant='outline'
         onClick={onOpen}
@@ -159,7 +159,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
 
 export default ForwardModel;
 
-ForwardModel.prototype = {
+ForwardModel.propTypes = {
   forwardData: PropTypes.object.isRequired,
   getMessageBody: PropTypes.func.isRequired,
 };

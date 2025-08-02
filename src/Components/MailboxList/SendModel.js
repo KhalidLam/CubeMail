@@ -15,7 +15,7 @@ import {
   Textarea,
   useToast,
   useDisclosure,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 
 const SendModel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,7 +44,7 @@ const SendModel = () => {
   const sendMessage = (headers_obj, message, callback) => {
     let email = "";
 
-    for (var header in headers_obj)
+    for (let header in headers_obj)
       email += header += ": " + headers_obj[header] + "\r\n";
 
     email += "\r\n" + message;
@@ -84,7 +84,7 @@ const SendModel = () => {
       <Button
         w='100%'
         h='48px'
-        leftIcon={BsPlusCircle}
+        leftIcon={<BsPlusCircle />}
         borderRadius='20px'
         variant='solid'
         variantColor='blue'

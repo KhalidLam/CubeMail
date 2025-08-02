@@ -5,7 +5,7 @@ import EmailRow from "./EmailRow";
 import SearchBar from "./SearchBar";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Flex, Box, Spinner } from "@chakra-ui/core";
+import { Flex, Box, Spinner } from "@chakra-ui/react";
 
 const Messages = () => {
   const {
@@ -29,9 +29,9 @@ const Messages = () => {
         loader={<h4>Loading...</h4>}
         scrollableTarget='scrollableDiv'
       >
-        {messages.map((message, index) => (
+        {messages.map((message) => (
           <EmailRow
-            key={index}
+            key={message.id}
             message={message}
             handleMessageClick={handleMessageClick}
           />
@@ -60,10 +60,11 @@ const EmailList = () => {
     <Flex
       direction='column'
       wrap='no-wrap'
-      w='26%'
-      h='100%'
+      w={{ base: '100%', lg: '26%' }}
+      h={{ base: '50vh', lg: '100%' }}
       bg='#f1f1f1'
       color='black'
+      minH={{ base: '300px', lg: 'auto' }}
     >
       {/* Search bar */}
       <SearchBar />

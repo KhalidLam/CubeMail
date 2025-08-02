@@ -16,7 +16,7 @@ import {
   Textarea,
   useToast,
   useDisclosure,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 
 const ReplyModel = ({ replayData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,8 +47,9 @@ const ReplyModel = ({ replayData }) => {
   const sendMessage = (headers_obj, message, callback) => {
     let email = "";
 
-    for (let header in headers_obj)
-      email += header += ": " + headers_obj[header] + "\r\n";
+    for (let header in headers_obj) {
+      email += header + ": " + headers_obj[header] + "\r\n";
+    }
 
     email += "\r\n" + message;
 
@@ -85,7 +86,7 @@ const ReplyModel = ({ replayData }) => {
   return (
     <Fragment>
       <Button
-        rightIcon={MdReplay}
+        rightIcon={<MdReplay />}
         variantColor='blue'
         variant='outline'
         onClick={onOpen}
@@ -157,6 +158,6 @@ const ReplyModel = ({ replayData }) => {
 
 export default ReplyModel;
 
-ReplyModel.prototype = {
+ReplyModel.propTypes = {
   replayData: PropTypes.object.isRequired,
 };

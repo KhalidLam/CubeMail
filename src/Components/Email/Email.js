@@ -11,12 +11,12 @@ import {
   Flex,
   Box,
   Button,
-  AspectRatioBox,
   Avatar,
   Text,
   useToast,
   Heading,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
+import { FiTrash } from "react-icons/fi";
 
 import emptyEmailImg from "./empty_email.svg";
 
@@ -138,29 +138,35 @@ const Email = () => {
     <Flex
       direction='column'
       wrap='no-wrap'
-      w='58%'
-      h='100%'
-      p='0.6rem 1rem'
+      w={{ base: '100%', lg: '58%' }}
+      h={{ base: '50vh', lg: '100%' }}
+      p={{ base: '0.4rem 0.5rem', md: '0.6rem 1rem' }}
       bg='white'
       color='black'
       border='1px'
       borderColor='gray.200'
       borderTopRightRadius='md'
       borderBottomRightRadius='md'
+      minH={{ base: '400px', lg: 'auto' }}
     >
       {!message ? (
         <EmptyMail />
       ) : (
         <Fragment>
           {/* Header Buttons */}
-          <Flex justify='space-around' wrap='no-wrap' mb={2}>
+          <Flex 
+            justify='space-around' 
+            wrap={{ base: 'wrap', md: 'nowrap' }} 
+            mb={2}
+            gap={{ base: 2, md: 0 }}
+          >
             <ReplyModel replayData={formatReplayData(headers)} />
             <ForwardModel
               forwardData={message}
               getMessageBody={getMessageBody}
             />
             <Button
-              rightIcon={MdArchive}
+              rightIcon={<MdArchive />}
               variantColor='blue'
               variant='outline'
               onClick={() => handleArchiveBtn([message.id], ["INBOX"])}
@@ -168,7 +174,7 @@ const Email = () => {
               Archive
             </Button>
             <Button
-              rightIcon='delete'
+              rightIcon={<FiTrash />}
               variantColor='blue'
               variant='outline'
               onClick={() => handleTrashBtn("me", message.id)}
@@ -209,11 +215,11 @@ const Email = () => {
               </Text>
             </Box>
             <Box className='mailBody' flexGrow='2'>
-              <AspectRatioBox ratio={16 / 9} h='100%'>
-                <Box as='iframe' id='iframe' title='messageBody'>
+              <Box h='100%' w='100%'>
+                <Box as='iframe' id='iframe' title='messageBody' h='100%' w='100%'>
                   <p>Your browser does not support iframes.</p>
                 </Box>
-              </AspectRatioBox>
+              </Box>
             </Box>
           </Flex>
         </Fragment>

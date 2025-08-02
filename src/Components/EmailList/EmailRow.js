@@ -1,6 +1,6 @@
 import React from "react";
 import { getHeader, decodeHtml, removeQuote } from "../Helper";
-import { Flex, Box, Avatar, Text } from "@chakra-ui/core";
+import { Flex, Box, Avatar, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 const EmailRow = ({ message, handleMessageClick }) => {
@@ -13,7 +13,7 @@ const EmailRow = ({ message, handleMessageClick }) => {
   const subject = getHeader(message.payload.headers, "Subject");
 
   // Get part of email snippet
-  const msg = decodeHtml(message.snippet.substr(0, 75));
+  const msg = decodeHtml(message.snippet.substring(0, 75));
 
   // Set backgroundColor to white if the mail is not yet opened
   const backgroundColor =
@@ -51,7 +51,7 @@ const EmailRow = ({ message, handleMessageClick }) => {
 
 export default EmailRow;
 
-EmailRow.prototype = {
+EmailRow.propTypes = {
   message: PropTypes.object.isRequired,
   handleMessageClick: PropTypes.func.isRequired,
 };

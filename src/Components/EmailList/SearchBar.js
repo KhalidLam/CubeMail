@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { Box, Input, InputGroup, IconButton } from "@chakra-ui/core";
+import { Box, Input, InputGroup, IconButton } from "@chakra-ui/react";
+import { FiSearch } from "react-icons/fi";
 import EmailContext from "../../context/email/emailContext";
 
 const SearchBar = () => {
@@ -17,7 +18,7 @@ const SearchBar = () => {
     <Box py='5px' bg='white' border='1px' borderColor='gray.200'>
       <InputGroup size='lg'>
         <IconButton
-          icon='search'
+          icon={<FiSearch />}
           variant='ghost'
           variantColor='blue'
           marginLeft='5px'
