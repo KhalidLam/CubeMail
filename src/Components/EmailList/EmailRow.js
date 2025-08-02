@@ -1,6 +1,7 @@
 import React from "react";
 import { getHeader, decodeHtml, removeQuote } from "../Helper";
-import { Flex, Box, Avatar, Text } from "@chakra-ui/react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { cn } from "../../lib/utils";
 import PropTypes from "prop-types";
 
 const EmailRow = ({ message, handleMessageClick }) => {
@@ -20,32 +21,31 @@ const EmailRow = ({ message, handleMessageClick }) => {
     message.labelIds.indexOf("UNREAD") > -1 ? "#fff" : "#E2E8F0";
 
   return (
-    <Flex
+    <div
       key={message.id}
       id={message.id}
       onClick={handleMessageClick}
-      wrap='no-wrap'
-      justify='space-around'
-      py={2}
-      bg={backgroundColor}
-      borderTop='1px'
-      borderBottom='1px'
-      borderColor='gray.300'
-      cursor='pointer'
+      className={cn(
+        "flex items-center space-x-3 py-2 px-3 cursor-pointer border-t border-b border-gray-300 hover:bg-gray-50 transition-colors",
+        backgroundColor === "#fff" ? "bg-white" : "bg-gray-100"
+      )}
     >
-      <Avatar name={name} src='https://bit.ly/tioluwani-kolawole' />
-      <Box w='80%'>
-        <Text fontSize='sm' color='gray.700' isTruncated>
+      <Avatar className="h-10 w-10">
+        <AvatarImage src="https://bit.ly/tioluwani-kolawole" alt={name} />
+        <AvatarFallback>{name.slice(0, 2).toUpperCase()}</AvatarFallback>
+      </Avatar>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm text-gray-700 truncate font-medium">
           {name}
-        </Text>
-        <Text fontSize='md' fontWeight='bold' color='#3182ce' isTruncated>
+        </p>
+        <p className="text-base font-bold text-blue-600 truncate">
           {subject}
-        </Text>
-        <Text fontSize='xs' color='gray.500'>
+        </p>
+        <p className="text-xs text-gray-500 truncate">
           {msg}
-        </Text>
-      </Box>
-    </Flex>
+        </p>
+      </div>
+    </div>
   );
 };
 

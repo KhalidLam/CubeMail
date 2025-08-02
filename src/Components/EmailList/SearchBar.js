@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
-import { Box, Input, InputGroup, IconButton } from "@chakra-ui/react";
-import { FiSearch } from "react-icons/fi";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
+import { Search } from "lucide-react";
 import EmailContext from "../../context/email/emailContext";
 
 const SearchBar = () => {
@@ -15,29 +17,28 @@ const SearchBar = () => {
   };
 
   return (
-    <Box py='5px' bg='white' border='1px' borderColor='gray.200'>
-      <InputGroup size='lg'>
-        <IconButton
-          icon={<FiSearch />}
-          variant='ghost'
-          variantColor='blue'
-          marginLeft='5px'
-          aria-label='Search messages'
+    <div className="py-2 px-3 bg-white border border-gray-200">
+      <div className="flex items-center space-x-2">
+        <Button 
+          variant="ghost" 
+          size="icon"
+          className="h-8 w-8 text-blue-600"
           onClick={handleQuery}
-          isLoading={loading}
-        />
+          disabled={loading || !query}
+          aria-label="Search messages"
+        >
+          {loading ? <Spinner size={4} /> : <Search className="h-4 w-4" />}
+        </Button>
         <Input
-          type='text'
-          placeholder='Search mail'
-          borderWidth='0px'
-          borderRadius='0px'
-          focusBorderColor='white'
+          type="text"
+          placeholder="Search mail"
+          className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-0"
           value={query}
           onChange={handleOnChange}
           onKeyDown={handleQuery}
         />
-      </InputGroup>
-    </Box>
+      </div>
+    </div>
   );
 };
 

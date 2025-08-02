@@ -5,7 +5,7 @@ import EmailRow from "./EmailRow";
 import SearchBar from "./SearchBar";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Flex, Box, Spinner } from "@chakra-ui/react";
+import { Spinner } from "../ui/spinner";
 
 const Messages = () => {
   const {
@@ -21,13 +21,17 @@ const Messages = () => {
   };
 
   return (
-    <Box overflowY='auto' id='scrollableDiv'>
+    <div className="overflow-y-auto flex-1" id="scrollableDiv">
       <InfiniteScroll
         dataLength={messages.length}
         next={loadMoreMessages}
         hasMore={hasMoreMessages}
-        loader={<h4>Loading...</h4>}
-        scrollableTarget='scrollableDiv'
+        loader={
+          <div className="flex justify-center py-4">
+            <Spinner className="h-6 w-6" />
+          </div>
+        }
+        scrollableTarget="scrollableDiv"
       >
         {messages.map((message) => (
           <EmailRow
@@ -37,41 +41,27 @@ const Messages = () => {
           />
         ))}
       </InfiniteScroll>
-    </Box>
+    </div>
   );
 };
 
 const CustomSpinner = () => (
-  <Box mt={6} display='flex' align='center' justifyContent='center'>
-    <Spinner
-      thickness='4px'
-      speed='0.65s'
-      emptyColor='gray.200'
-      color='blue.500'
-      size='xl'
-    />
-  </Box>
+  <div className="mt-6 flex items-center justify-center">
+    <Spinner className="h-8 w-8 text-blue-500" />
+  </div>
 );
 
 const EmailList = () => {
   const { messages, loading } = useContext(EmailContext);
 
   return (
-    <Flex
-      direction='column'
-      wrap='no-wrap'
-      w={{ base: '100%', lg: '26%' }}
-      h={{ base: '50vh', lg: '100%' }}
-      bg='#f1f1f1'
-      color='black'
-      minH={{ base: '300px', lg: 'auto' }}
-    >
+    <div className="flex flex-col w-full lg:w-[26%] h-[50vh] lg:h-full bg-gray-100 text-black min-h-[300px] lg:min-h-0">
       {/* Search bar */}
       <SearchBar />
 
       {/* Messages */}
       {!messages.length && loading ? <CustomSpinner /> : <Messages />}
-    </Flex>
+    </div>
   );
 };
 

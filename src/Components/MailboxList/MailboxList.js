@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import EmailContext from "../../context/email/emailContext";
 import SendModel from "./SendModel";
+import { Button } from "../ui/button";
+import { cn } from "../../lib/utils";
 
 // Import Icons
-import { Button, Box, List, ListItem } from "@chakra-ui/react";
 import { MdLabel, MdStar, MdPeople, MdLoyalty, MdInbox } from "react-icons/md";
 import { FiSend, FiFile, FiTrash } from "react-icons/fi";
 
@@ -11,163 +12,48 @@ const MailboxList = () => {
   const { getMessages, setCurrentLabel } = useContext(EmailContext);
   const [active, setActive] = useState("INBOX");
 
-  const handleClick = (e) => {
-    const categoryId = e.target.id;
+  const handleClick = (categoryId) => {
     setActive(categoryId);
     setCurrentLabel(categoryId);
-
-    // Get Messages using clicked category
     getMessages(categoryId);
   };
 
-  return (
-    <Box
-      w={{ base: '100%', lg: '16%' }}
-      h={{ base: 'auto', lg: '100%' }}
-      bg='white'
-      border='1px'
-      borderColor='gray.200'
-      borderTopLeftRadius='md'
-      borderBottomLeftRadius='md'
-      minH={{ base: '200px', lg: 'auto' }}
-    >
-      <List>
-        {/* Send Model */}
-        <ListItem p='0.5rem 1rem 1rem'>
-          <SendModel />
-        </ListItem>
+  const mailboxItems = [
+    { id: 'INBOX', label: 'Inbox', icon: MdInbox },
+    { id: 'STARRED', label: 'Starred', icon: MdStar },
+    { id: 'IMPORTANT', label: 'Important', icon: MdLabel },
+    { id: 'SENT', label: 'Sent', icon: FiSend },
+    { id: 'DRAFT', label: 'Drafts', icon: FiFile },
+    { id: 'TRASH', label: 'Trash', icon: FiTrash },
+    { id: 'CATEGORY_SOCIAL', label: 'Social', icon: MdPeople },
+    { id: 'CATEGORY_PROMOTIONS', label: 'Promotions', icon: MdLoyalty },
+  ];
 
-        {/* Labels Buttons */}
-        <ListItem>
+  return (
+    <div className="w-full lg:w-[16%] h-auto lg:h-full bg-white border border-gray-200 rounded-l-md min-h-[200px] lg:min-h-0">
+      {/* Send Model */}
+      <div className="p-2 pb-4">
+        <SendModel />
+      </div>
+
+      {/* Mailbox Navigation */}
+      <nav className="space-y-1">
+        {mailboxItems.map(({ id, label, icon: Icon }) => (
           <Button
-            id='INBOX'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<MdInbox />}
-            variantColor='blue'
-            variant={active === "INBOX" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
+            key={id}
+            variant={active === id ? "default" : "ghost"}
+            className={cn(
+              "w-full h-11 justify-start pl-8 rounded-none text-left",
+              active === id && "bg-blue-600 text-white hover:bg-blue-700"
+            )}
+            onClick={() => handleClick(id)}
           >
-            Inbox
+            <Icon className="mr-3 h-4 w-4" />
+            {label}
           </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            id='STARRED'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<MdStar />}
-            variantColor='blue'
-            variant={active === "STARRED" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
-          >
-            Starred
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            id='IMPORTANT'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<MdLabel />}
-            variantColor='blue'
-            variant={active === "IMPORTANT" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
-          >
-            Important
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            id='SENT'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<FiSend />}
-            variantColor='blue'
-            variant={active === "SENT" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
-          >
-            Sent
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            id='DRAFT'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<FiFile />}
-            variantColor='blue'
-            variant={active === "DRAFT" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
-          >
-            Drafts
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            id='TRASH'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<FiTrash />}
-            variantColor='blue'
-            variant={active === "TRASH" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
-          >
-            Trash
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            id='CATEGORY_SOCIAL'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<MdPeople />}
-            variantColor='blue'
-            variant={active === "CATEGORY_SOCIAL" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
-          >
-            Social
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            id='CATEGORY_PROMOTIONS'
-            w='100%'
-            h='45px'
-            py={2}
-            pl={8}
-            leftIcon={<MdLoyalty />}
-            variantColor='blue'
-            variant={active === "CATEGORY_PROMOTIONS" ? "solid" : "ghost"}
-            justifyContent='flex-start'
-            onClick={handleClick}
-          >
-            Promotions
-          </Button>
-        </ListItem>
-      </List>
-    </Box>
+        ))}
+      </nav>
+    </div>
   );
 };
 

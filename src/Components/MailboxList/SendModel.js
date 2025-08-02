@@ -1,21 +1,18 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Base64 } from "js-base64";
-import { BsPlusCircle } from "react-icons/bs";
-import {
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Input,
-  FormControl,
-  Textarea,
-  useToast,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Plus } from "lucide-react";
+import { Button } from "../ui/button";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogFooter 
+} from "../ui/dialog";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import { useToast } from "../../hooks/useToast";
 
 const SendModel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,17 +58,17 @@ const SendModel = () => {
 
   const displayToast = ({ result }) => {
     if (result.labelIds.indexOf("SENT") !== -1) {
-      toast({
-        title: "Message Sent.",
-        description: "We've Sent your email.",
+      toast.toast({
+        title: "Message Sent",
+        description: "We've sent your email.",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
     } else {
-      toast({
-        title: "An error occurred.",
-        description: "Unable to sent your email.",
+      toast.toast({
+        title: "An error occurred",
+        description: "Unable to send your email.",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -80,68 +77,61 @@ const SendModel = () => {
   };
 
   return (
-    <Fragment>
+    <>
       <Button
-        w='100%'
-        h='48px'
-        leftIcon={<BsPlusCircle />}
-        borderRadius='20px'
-        variant='solid'
-        variantColor='blue'
+        className="w-full h-12 rounded-2xl"
         onClick={onOpen}
       >
+        <Plus className="mr-2 h-4 w-4" />
         New Message
       </Button>
-      <Modal
-        isOpen={isOpen}
-        size='xl'
-        onClose={onClose}
-        closeOnOverlayClick={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>New Message</ModalHeader>
-          <ModalCloseButton />
-          <form id='form' onSubmit={handleSubmit}>
-            <ModalBody>
-              <FormControl isRequired>
-                <Input
-                  type='email'
-                  id='emailTo'
-                  placeholder='To'
-                  aria-describedby='email-helper-text'
-                />
-              </FormControl>
-              <FormControl isRequired>
-                <Input
-                  type='text'
-                  id='subject'
-                  placeholder='Subject'
-                  aria-describedby='subject-email-helper-text'
-                />
-              </FormControl>
-              <FormControl isRequired>
-                <Textarea
-                  id='message'
-                  minH='280px'
-                  size='xl'
-                  resize='vertical'
-                />
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button type='reset' variantColor='blue' mr={3} onClick={onClose}>
+      
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>New Message</DialogTitle>
+          </DialogHeader>
+          
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-4 py-4">
+              <Input
+                type="email"
+                id="emailTo"
+                placeholder="To"
+                required
+                className="w-full"
+              />
+              <Input
+                type="text"
+                id="subject"
+                placeholder="Subject"
+                required
+                className="w-full"
+              />
+              <Textarea
+                id="message"
+                placeholder="Write your message..."
+                required
+                className="min-h-[280px] resize-y"
+              />
+            </div>
+            
+            <DialogFooter className="gap-2">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={onClose}
+              >
                 Close
               </Button>
-              <Button type='submit' variantColor='green'>
+              <Button type="submit">
                 Send
               </Button>
-            </ModalFooter>
+            </DialogFooter>
           </form>
-        </ModalContent>
-      </Modal>
-    </Fragment>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
