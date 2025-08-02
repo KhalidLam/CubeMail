@@ -27,15 +27,11 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.8.8",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^4.1.17",
     "js-base64": "^3.7.5",
     "lucide-react": "^0.536.0",
     "prop-types": "^15.8.1",

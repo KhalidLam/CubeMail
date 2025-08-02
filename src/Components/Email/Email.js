@@ -7,15 +7,9 @@ import ForwardModel from "./ForwardModel";
 import { getHeader, removeQuote, formatDate } from "../Helper"; // Helper functions
 import { Base64 } from "js-base64";
 import { MdArchive } from "react-icons/md"; // Icons
-import {
-  Flex,
-  Box,
-  Button,
-  Avatar,
-  Text,
-  useToast,
-  Heading,
-} from "@chakra-ui/react";
+import { Button } from "../ui/button";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { useToast } from "../../hooks/useToast";
 import { FiTrash } from "react-icons/fi";
 
 import emptyEmailImg from "./empty_email.svg";
@@ -135,116 +129,90 @@ const Email = () => {
   };
 
   return (
-    <Flex
-      direction='column'
-      wrap='no-wrap'
-      w={{ base: '100%', lg: '58%' }}
-      h={{ base: '50vh', lg: '100%' }}
-      p={{ base: '0.4rem 0.5rem', md: '0.6rem 1rem' }}
-      bg='white'
-      color='black'
-      border='1px'
-      borderColor='gray.200'
-      borderTopRightRadius='md'
-      borderBottomRightRadius='md'
-      minH={{ base: '400px', lg: 'auto' }}
-    >
+    <div className="flex flex-col w-full lg:w-[58%] h-full lg:h-full p-2 lg:p-4 bg-white text-black border border-gray-200 rounded-r-md min-h-[400px] lg:min-h-auto">
       {!message ? (
         <EmptyMail />
       ) : (
         <Fragment>
           {/* Header Buttons */}
-          <Flex 
-            justify='space-around' 
-            wrap={{ base: 'wrap', md: 'nowrap' }} 
-            mb={2}
-            gap={{ base: 2, md: 0 }}
-          >
+          <div className="flex justify-around flex-wrap lg:flex-nowrap mb-2 gap-2 lg:gap-0">
             <ReplyModel replayData={formatReplayData(headers)} />
             <ForwardModel
               forwardData={message}
               getMessageBody={getMessageBody}
             />
             <Button
-              rightIcon={<MdArchive />}
-              variantColor='blue'
-              variant='outline'
+              variant="outline"
               onClick={() => handleArchiveBtn([message.id], ["INBOX"])}
+              className="flex items-center gap-2"
             >
+              <MdArchive />
               Archive
             </Button>
             <Button
-              rightIcon={<FiTrash />}
-              variantColor='blue'
-              variant='outline'
+              variant="outline"
               onClick={() => handleTrashBtn("me", message.id)}
+              className="flex items-center gap-2"
             >
+              <FiTrash />
               Delete
             </Button>
-          </Flex>
+          </div>
 
           {/* Mail Container */}
-          <Flex
-            className='mailContainer'
-            flexGrow='2'
-            direction='column'
-            wrap='no-wrap'
-            p={2}
-          >
-            <Box className='mailHeader' mb={2}>
-              <Text fontSize='lg' fontWeight='bold' color='gray.700' mb={1}>
+          <div className="flex flex-col flex-grow p-2">
+            <div className="mb-2">
+              <h2 className="text-lg font-bold text-gray-700 mb-1">
                 {getHeader(headers, "Subject")}
-              </Text>
-              <Flex wrap='no-wrap' justify='flex-start'>
-                <Avatar
-                  name={removeQuote(getHeader(headers, "From").split("<")[0])}
-                  src='https://bit.ly/tioluwani-kolawole'
-                  mr={4}
-                />
-                <Box w='80%'>
-                  <Text fontSize='md' color='gray.700'>
+              </h2>
+              <div className="flex items-start">
+                <Avatar className="mr-4">
+                  <AvatarFallback>
+                    {removeQuote(getHeader(headers, "From").split("<")[0]).charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="w-4/5">
+                  <p className="text-base text-gray-700">
                     {getHeader(headers, "From")}
-                  </Text>
-                  <Text fontSize='sm' color='gray.500'>
+                  </p>
+                  <p className="text-sm text-gray-500">
                     {formatDate(getHeader(headers, "Date"))}
-                  </Text>
-                </Box>
-              </Flex>
-              <Text fontSize='sm' color='gray.700' mt={1}>
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-700 mt-1">
                 {`To: ${getHeader(headers, "To")}`}
-              </Text>
-            </Box>
-            <Box className='mailBody' flexGrow='2'>
-              <Box h='100%' w='100%'>
-                <Box as='iframe' id='iframe' title='messageBody' h='100%' w='100%'>
+              </p>
+            </div>
+            <div className="flex-grow">
+              <div className="h-full w-full">
+                <iframe 
+                  id="iframe" 
+                  title="messageBody" 
+                  className="h-full w-full border-0"
+                >
                   <p>Your browser does not support iframes.</p>
-                </Box>
-              </Box>
-            </Box>
-          </Flex>
+                </iframe>
+              </div>
+            </div>
+          </div>
         </Fragment>
       )}
-    </Flex>
+    </div>
   );
 };
 
 export default Email;
 
 const EmptyMail = () => (
-  <Flex
-    flexDirection='column'
-    justify='center'
-    alignItems='center'
-    mb={3}
-    style={{ height: "100%" }}
-  >
+  <div className="flex flex-col justify-center items-center h-full">
     <img
       src={emptyEmailImg}
-      alt='React Logo'
-      style={{ width: "40%", height: "auto" }}
+      alt='Empty Email'
+      className="w-2/5 h-auto"
     />
-    <Heading as='h3' size='lg' color='#a6b0b7' mt={5}>
+    <h3 className="text-xl font-bold text-gray-400 mt-5">
       Click on Email to Open it
-    </Heading>
-  </Flex>
+    </h3>
+  </div>
 );

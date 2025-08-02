@@ -1,26 +1,22 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Base64 } from "js-base64";
 import { MdArrowForward } from "react-icons/md";
 import { getHeader } from "../Helper";
 import PropTypes from "prop-types";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import {
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Input,
-  FormControl,
-  Textarea,
-  useToast,
-  useDisclosure,
-} from "@chakra-ui/react";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "../ui/dialog";
+import { useToast } from "../../hooks/useToast";
 
 const ForwardModel = ({ forwardData, getMessageBody }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
 
   const handleSubmit = (e) => {
@@ -32,7 +28,7 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
       forwardData.payload.headers,
       getMessageBody(forwardData.payload)
     );
-    onClose();
+    setIsOpen(false);
   };
 
   const handleForwardMsg = (forwardTo, headers, body) => {
@@ -89,70 +85,80 @@ const ForwardModel = ({ forwardData, getMessageBody }) => {
   return (
     <Fragment>
       <Button
-        rightIcon={<MdArrowForward />}
-        variantColor='blue'
-        variant='outline'
-        onClick={onOpen}
+        variant="outline"
+        onClick={() => setIsOpen(true)}
+        className="flex items-center gap-2"
       >
+        <MdArrowForward />
         Forward
       </Button>
 
-      <Modal
-        isOpen={isOpen}
-        size='xl'
-        onClose={onClose}
-        closeOnOverlayClick={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Forward </ModalHeader>
-          <ModalCloseButton />
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Forward</DialogTitle>
+          </DialogHeader>
+          
           <form id='form' onSubmit={handleSubmit}>
-            <ModalBody>
-              <FormControl isRequired>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="emailTo" className="text-sm font-medium">
+                  To
+                </label>
                 <Input
                   type='email'
                   id='emailTo'
                   placeholder='To'
-                  aria-describedby='email-helper-text'
+                  required
                 />
-              </FormControl>
-              <FormControl isRequired>
+              </div>
+              
+              <div className="space-y-2">
+                <label htmlFor="subject" className="text-sm font-medium">
+                  Subject
+                </label>
                 <Input
                   type='text'
                   id='subject'
                   placeholder='Subject'
-                  aria-describedby='subject-email-helper-text'
                   value={getHeader(forwardData.payload.headers, "Subject")}
                   readOnly
+                  required
                 />
-              </FormControl>
-              <FormControl isRequired>
+              </div>
+              
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium">
+                  Message
+                </label>
                 <Textarea
                   id='message'
-                  minH='280px'
-                  size='xl'
-                  resize='vertical'
+                  className="min-h-[280px] resize-y"
                   value={
                     "------Forward Message------\r\n" +
                     getForwardHead(forwardData.payload.headers)
                   }
                   readOnly
+                  required
                 />
-              </FormControl>
-            </ModalBody>
+              </div>
+            </div>
 
-            <ModalFooter>
-              <Button type='reset' variantColor='blue' mr={3} onClick={onClose}>
+            <DialogFooter className="mt-6">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setIsOpen(false)}
+              >
                 Close
               </Button>
-              <Button type='submit' variantColor='green'>
+              <Button type="submit">
                 Send
               </Button>
-            </ModalFooter>
+            </DialogFooter>
           </form>
-        </ModalContent>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </Fragment>
   );
 };

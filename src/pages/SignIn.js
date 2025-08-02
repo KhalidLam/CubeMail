@@ -1,44 +1,48 @@
 import React from "react";
-import { Button, Flex, VStack, Text, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
+import { Button } from "../Components/ui/button";
+import { Alert, AlertDescription } from "../Components/ui/alert";
+import { Spinner } from "../Components/ui/spinner";
+import { AlertTriangle } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import PropTypes from "prop-types";
 
 const SignIn = ({ handleAuthClick, loading, error }) => (
-  <Flex h='100vh' justify='center' alignItems='center' bg='#e5f4f1'>
-    <VStack spacing={6} maxW="md" w="full" px={4}>
+  <div className="flex h-screen justify-center items-center bg-[#e5f4f1]">
+    <div className="flex flex-col space-y-6 max-w-md w-full px-4">
       {error && (
-        <Alert status="error" borderRadius="md">
-          <AlertIcon />
-          <VStack align="start" spacing={1}>
-            <AlertTitle fontSize="sm">Authentication Error</AlertTitle>
-            <AlertDescription fontSize="xs">
+        <Alert variant="destructive" className="rounded-md">
+          <AlertTriangle className="h-4 w-4" />
+          <div className="flex flex-col items-start space-y-1">
+            <div className="text-sm font-medium">Authentication Error</div>
+            <AlertDescription className="text-xs">
               {error.includes('403') 
                 ? 'This app needs to be verified by Google to access Gmail. Please contact the developer or add your email as a test user in Google Cloud Console.'
                 : error
               }
             </AlertDescription>
-          </VStack>
+          </div>
         </Alert>
       )}
       
       <Button
-        isLoading={loading}
-        leftIcon={<FcGoogle />}
-        height='50px'
-        variantColor='blue'
-        variant='outline'
-        backgroundColor='white'
+        disabled={loading}
+        className="h-12 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
         onClick={handleAuthClick}
         size="lg"
       >
+        {loading ? (
+          <Spinner className="mr-2 h-4 w-4" />
+        ) : (
+          <FcGoogle className="mr-2 h-5 w-5" />
+        )}
         Sign in with Google
       </Button>
       
-      <Text fontSize="xs" color="gray.600" textAlign="center">
+      <p className="text-xs text-gray-600 text-center">
         Click to authenticate with your Gmail account
-      </Text>
-    </VStack>
-  </Flex>
+      </p>
+    </div>
+  </div>
 );
 
 SignIn.propTypes = {

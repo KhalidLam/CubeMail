@@ -1,25 +1,21 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Base64 } from "js-base64";
 import { MdReplay } from "react-icons/md";
 import PropTypes from "prop-types";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import {
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Input,
-  FormControl,
-  Textarea,
-  useToast,
-  useDisclosure,
-} from "@chakra-ui/react";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "../ui/dialog";
+import { useToast } from "../../hooks/useToast";
 
 const ReplyModel = ({ replayData }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
 
   const handleSubmit = (e) => {
@@ -41,7 +37,7 @@ const ReplyModel = ({ replayData }) => {
       displayToast
     );
 
-    onClose();
+    setIsOpen(false);
   };
 
   const sendMessage = (headers_obj, message, callback) => {
@@ -86,72 +82,85 @@ const ReplyModel = ({ replayData }) => {
   return (
     <Fragment>
       <Button
-        rightIcon={<MdReplay />}
-        variantColor='blue'
-        variant='outline'
-        onClick={onOpen}
+        variant="outline"
+        onClick={() => setIsOpen(true)}
+        className="flex items-center gap-2"
       >
+        <MdReplay />
         Replay
       </Button>
-      <Modal
-        isOpen={isOpen}
-        size='xl'
-        onClose={onClose}
-        closeOnOverlayClick={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Replay </ModalHeader>
-          <ModalCloseButton />
+      
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Replay</DialogTitle>
+          </DialogHeader>
+          
           <form id='form' onSubmit={handleSubmit}>
-            <ModalBody>
+            <div className="space-y-4">
               <Input
                 type='hidden'
                 id='reply-message-id'
                 value={replayData.msgId}
                 readOnly
               />
-              <FormControl isRequired>
+              
+              <div className="space-y-2">
+                <label htmlFor="emailTo" className="text-sm font-medium">
+                  To
+                </label>
                 <Input
                   type='email'
                   id='emailTo'
                   placeholder='To'
-                  aria-describedby='email-helper-text'
                   value={replayData.to}
                   readOnly
+                  required
                 />
-              </FormControl>
-              <FormControl isRequired>
+              </div>
+              
+              <div className="space-y-2">
+                <label htmlFor="subject" className="text-sm font-medium">
+                  Subject
+                </label>
                 <Input
                   type='text'
                   id='subject'
                   placeholder='Subject'
-                  aria-describedby='subject-email-helper-text'
                   value={replayData.subject}
                   readOnly
+                  required
                 />
-              </FormControl>
-              <FormControl isRequired>
+              </div>
+              
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium">
+                  Message
+                </label>
                 <Textarea
                   id='message'
-                  minH='280px'
-                  size='xl'
-                  resize='vertical'
+                  className="min-h-[280px] resize-y"
+                  placeholder="Type your message here..."
+                  required
                 />
-              </FormControl>
-            </ModalBody>
+              </div>
+            </div>
 
-            <ModalFooter>
-              <Button type='reset' variantColor='blue' mr={3} onClick={onClose}>
+            <DialogFooter className="mt-6">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setIsOpen(false)}
+              >
                 Close
               </Button>
-              <Button type='submit' variantColor='green'>
+              <Button type="submit">
                 Send
               </Button>
-            </ModalFooter>
+            </DialogFooter>
           </form>
-        </ModalContent>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </Fragment>
   );
 };

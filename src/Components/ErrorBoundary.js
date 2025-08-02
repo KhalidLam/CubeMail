@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
+import { Button } from './ui/button';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -31,47 +31,30 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          minHeight="100vh"
-          p={8}
-          bg="gray.50"
-        >
-          <VStack spacing={6} textAlign="center" maxW="md">
-            <Heading size="lg" color="red.500">
+        <div className="flex items-center justify-center min-h-screen p-8 bg-gray-50">
+          <div className="flex flex-col items-center space-y-6 text-center max-w-md">
+            <h1 className="text-2xl font-bold text-red-500">
               Oops! Something went wrong
-            </Heading>
-            <Text color="gray.600">
+            </h1>
+            <p className="text-gray-600">
               We apologize for the inconvenience. An unexpected error has occurred.
-            </Text>
+            </p>
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <Box
-                p={4}
-                bg="red.50"
-                border="1px"
-                borderColor="red.200"
-                borderRadius="md"
-                textAlign="left"
-                fontSize="sm"
-                maxW="100%"
-                overflow="auto"
-              >
-                <Text fontWeight="bold" color="red.700" mb={2}>
+              <div className="p-4 bg-red-50 border border-red-200 rounded-md text-left text-sm max-w-full overflow-auto">
+                <p className="font-bold text-red-700 mb-2">
                   Error Details:
-                </Text>
-                <Text color="red.600" fontFamily="mono" whiteSpace="pre-wrap">
+                </p>
+                <p className="text-red-600 font-mono whitespace-pre-wrap">
                   {this.state.error.toString()}
                   {this.state.errorInfo.componentStack}
-                </Text>
-              </Box>
+                </p>
+              </div>
             )}
-            <Button variantColor="blue" onClick={this.handleReload}>
+            <Button onClick={this.handleReload}>
               Reload Page
             </Button>
-          </VStack>
-        </Box>
+          </div>
+        </div>
       );
     }
 

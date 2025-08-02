@@ -8,9 +8,8 @@ import Main from "./pages/Main";
 import SignIn from "./pages/SignIn";
 import ErrorBoundary from "./Components/ErrorBoundary";
 
-import { ChakraProvider, theme } from "@chakra-ui/react";
-
-// Use default theme from Chakra UI v1
+// Import globals for Tailwind CSS
+import "./globals.css";
 
 const App = () => {
   const [isAuthorize, setIsAuthorize] = useState(false);
@@ -117,17 +116,15 @@ const App = () => {
   return (
     <ErrorBoundary>
       <EmailState>
-        <ChakraProvider theme={theme}>
-          {isAuthorize ? (
-            <Main />
-          ) : (
-            <SignIn 
-              loading={loading} 
-              handleAuthClick={handleAuthClick}
-              error={authError}
-            />
-          )}
-        </ChakraProvider>
+        {isAuthorize ? (
+          <Main />
+        ) : (
+          <SignIn 
+            loading={loading} 
+            handleAuthClick={handleAuthClick}
+            error={authError}
+          />
+        )}
       </EmailState>
     </ErrorBoundary>
   );
