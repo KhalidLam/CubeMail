@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CubeMail is a Gmail web client built with React 18 and Chakra UI v1.8. It provides full Gmail functionality including reading, sending, replying, forwarding, and managing emails through Gmail's JavaScript API. The app runs entirely in the browser with OAuth 2.0 authentication.
+CubeMail is a Gmail web client built with React 18 and Tailwind CSS with shadcn/ui components. It provides full Gmail functionality including reading, sending, replying, forwarding, and managing emails through Gmail's JavaScript API. The app runs entirely in the browser with OAuth 2.0 authentication.
 
 ## Common Commands
 
@@ -81,7 +81,8 @@ REACT_APP_SCOPES=https://www.googleapis.com/auth/gmail.readonly https://www.goog
 ## Technology Stack
 
 - **React 18** with createRoot API
-- **Chakra UI v1.8** with responsive design patterns
+- **Tailwind CSS** with utility-first styling
+- **shadcn/ui** components built on Radix UI primitives
 - **React Context** for state management
 - **Google Identity Services** for modern OAuth
 - **Gmail REST API** for email operations
@@ -102,11 +103,11 @@ Use proper scopes in production:
 - Error handling displays user-friendly OAuth messages
 
 ### Responsive Design
-Uses Chakra UI responsive props pattern:
+Uses Tailwind CSS responsive classes pattern:
 ```jsx
 <Component 
-  prop={{ base: 'mobile-value', lg: 'desktop-value' }}
-  direction={{ base: 'column', lg: 'row' }}
+  className="mobile-class lg:desktop-class"
+  direction="flex-col lg:flex-row"
 />
 ```
 

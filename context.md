@@ -1842,7 +1842,7 @@ SOFTWARE.
 
 ![alt text](https://github.com/KhalidLam/CubeMail/blob/master/screenshot.jpg?raw=true)
 
-CubeMail is a webmail-client built using [Create-React-App](https://github.com/facebook/create-react-app) and [Chakra UI](https://github.com/chakra-ui/chakra-ui/), It runs completely in the browser and uses the [Gmail's public Javascript API](https://developers.google.com/gmail/api/).
+CubeMail is a webmail-client built using [Create-React-App](https://github.com/facebook/create-react-app) and [Tailwind CSS](https://tailwindcss.com/) with [shadcn/ui](https://ui.shadcn.com/) components, It runs completely in the browser and uses the [Gmail's public Javascript API](https://developers.google.com/gmail/api/).
 
 ## [Check it live here](https://khalidlam.github.io/CubeMail/)
 
@@ -1884,7 +1884,8 @@ $ cp .env.example .env
 ## Technologies used
 
 - [React](https://github.com/facebook/react) - build interfaces & data flow
-- [Chakra UI](https://github.com/chakra-ui/chakra-ui/) - components & styling
+- [Tailwind CSS](https://tailwindcss.com/) - utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) - modern UI components built on Radix UI
 - [React Icons](https://github.com/react-icons/react-icons) - Icons
 - [js-base64](https://github.com/dankogai/js-base64) - Base64 transcoder
 - [Gmail's public Javascript API](https://github.com/google/google-api-javascript-client) - access to Google APIs
